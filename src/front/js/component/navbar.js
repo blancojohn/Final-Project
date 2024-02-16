@@ -1,19 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
-export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+export const ChewyNavbar = () => {
+  return (
+    <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#0066CC' }} variant="dark" className="border-bottom">
+      <Container>
+        {/* <Navbar.Brand href="/" className="me-2">
+          <img src="your-chewy-logo.svg" alt="Tienda Suplementos Mascotas" width="180" />
+        </Navbar.Brand> */}
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <NavLink to="/" className="nav-link" activeClassName="active" style={{ color: 'white' }}>
+              Perros
+            </NavLink>
+            <NavLink to="/shop" className="nav-link" activeClassName="active" style={{ color: 'white' }}>
+              Gatos
+            </NavLink>
+            <NavLink to="/contact" className="nav-link" activeClassName="active" style={{ color: 'white' }}>
+              Ofertas
+            </NavLink>
+          </Nav>
+          <Nav>
+            <NavLink to="/search" className="nav-link" style={{ color: 'white' }}>
+              <i className="fa fa-search" aria-hidden="true"></i>
+            </NavLink>
+            <NavLink to="/cart" className="nav-link" style={{ color: 'white' }}>
+              <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+              <span className="cart-count">0</span>
+            </NavLink>
+            <NavLink to="/account" className="nav-link" style={{ color: 'white' }}>
+              <i className="fa fa-user" aria-hidden="true"></i>
+            </NavLink>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
 };
