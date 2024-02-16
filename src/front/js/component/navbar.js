@@ -6,9 +6,9 @@ export const ChewyNavbar = () => {
   return (
     <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#0066CC' }} variant="dark" className="border-bottom">
       <Container>
-        {/* <Navbar.Brand href="/" className="me-2">
-          <img src="your-chewy-logo.svg" alt="Tienda Suplementos Mascotas" width="180" />
-        </Navbar.Brand> */}
+        <Navbar.Brand href="/" className="me-2" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: '700', fontSize: '24px', color: 'white' }}>
+          Mascotienda
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
