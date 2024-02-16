@@ -1,0 +1,30 @@
+.navbar {
+    background-color: #0066CC;
+    padding: 20px 0;
+  }
+  
+  .navbar-brand {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: white;
+  }
+  
+  .nav-link {
+    color: white;
+    font-size: 20px;
+  }
+  
+  .navbar-toggler-icon {
+    border-color: white;
+  }
+  
+  .navbar-toggler {
+    color: white;
+  }
+  
+  .cart-count {
+    color: white;
+  }
+  
+  /* Add more styles as needed */
+  

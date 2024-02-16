@@ -1,0 +1,16 @@
+.carousel-item img {
+    width: 300px; 
+    height: 300px; 
+    object-fit:fill; 
+  }
+  
+
+  .carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+
+
+  
