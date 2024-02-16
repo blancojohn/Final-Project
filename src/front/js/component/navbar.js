@@ -24,9 +24,9 @@ export const ChewyNavbar = () => {
             </NavLink>
           </Nav>
           <Nav>
-            <NavLink to="/search" className="nav-link custom-link">
+            {/* <NavLink to="/search" className="nav-link custom-link">
               <i className="fa fa-search custom-icon" aria-hidden="true"></i>
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/cart" className="nav-link custom-link">
               <i className="fa fa-shopping-cart custom-icon" aria-hidden="true"></i>
               <span className="cart-count">0</span>
