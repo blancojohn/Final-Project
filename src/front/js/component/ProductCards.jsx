@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../../styles/productcards.css"; 
+import { Link } from 'react-router-dom';
 
 export const ProductCards = () => {
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
   const [products, setProducts] = useState([]);
 
   // Utilizamos useEffect para cargar los productos 
@@ -38,10 +44,11 @@ export const ProductCards = () => {
           return (
             <div className="col" key={product.id}>
               <div className="card shadow h-100">
+              <Link to={`/product/${product.id}`} className="btn btn-primary btn-small">Mas Detalles</Link>
                 <img src={product.image_url} className="card-img-top img-fluid" alt={product.name} />
                 <div className="card-body">
                   <h5 className="card-title text-danger">{product.name}</h5>
-                  <p className="card-text">{product.description}</p>
+                  {/* <p className="card-text">{product.description}</p> */}
                 </div>
                 <div className="card-footer">
                   <div className="d-flex justify-content-between align-items-center">
@@ -56,7 +63,7 @@ export const ProductCards = () => {
                       )}
                       <p className="card-text"><small className="text-muted">Categoría: {product.category}</small></p>
                     </div>
-                    <button className="btn btn-primary btn-small">Agregar Al Carro</button>
+                    <button className="btn btn-primary btn-sm">Agregar Al Carro</button>
                   </div>
                 </div>
               </div>

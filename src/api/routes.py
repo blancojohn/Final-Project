@@ -17,6 +17,17 @@ def get_products():
     products = Product.query.all()
     return jsonify([product.serialize() for product in products]), 200
 
+
+@api.route('/products/<int:product_id>', methods=['GET'])
+def get_product_by_id(product_id):
+    # agarrar producto por id
+    product = Product.query.get(product_id)
+    if product is None:
+        # si no hay producto 404
+        abort(404)
+    return jsonify(product.serialize()), 200
+
+
 @api.route('/products', methods=['POST'])
 def add_product():
     #se obtiene la info
