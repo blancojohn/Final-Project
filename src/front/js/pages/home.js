@@ -14,7 +14,7 @@ export const Home = () => {
 
 	return (
 		<><MyCarousel />
-		<CategoryCards />
+		{/* <CategoryCards /> */}
 		<ProductCards />
 		</>
 	)

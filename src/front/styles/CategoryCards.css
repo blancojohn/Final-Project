@@ -1,9 +1,29 @@
-.card {
-    max-height: 250px; 
-    max-width: 350px;
-    overflow: hidden; 
-  }
-  
-.card-img {
-    object-fit: contain;
+/* Adjust these styles to be specific to category cards */
+.category-card {
+  height: 200px;
+  width: 200px;
+  margin: auto;
+  position: relative;
+}
+
+.category-card-img {
+  height: 100%;
+  width: 100%;
+  border-radius: .25rem;
+}
+
+.category-card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-card-title {
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
