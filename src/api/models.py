@@ -26,6 +26,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     image_url = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=True)
+    category = db.Column(db.String(50), nullable=False)
 
     def serialize(self):
         return {
@@ -33,4 +34,7 @@ class Product(db.Model):
             "name": self.name,
             "price": self.price,
             "image_url": self.image_url,
-            "description": self.description
+            "description": self.description,
+            "category": self.category,
+
+        }
