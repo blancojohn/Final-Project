@@ -19,7 +19,7 @@ class User(db.Model):
         }
 
 
-
+# nuestra clase Product donde definimos todo lo necesario para mostrar en la pagina, incluyendo el nuevo agregado descuento
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -27,6 +27,7 @@ class Product(db.Model):
     image_url = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=True)
     category = db.Column(db.String(50), nullable=False)
+    discount = db.Column(db.Float, nullable=True, default=0.0)  #Asegurarse de que el valor introducido sea un float x ejemplo 0.20 = 20% de descuento
 
     def serialize(self):
         return {
@@ -36,5 +37,6 @@ class Product(db.Model):
             "image_url": self.image_url,
             "description": self.description,
             "category": self.category,
+            "discount": self.discount,
 
         }

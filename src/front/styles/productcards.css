@@ -19,10 +19,25 @@
 }
 
 .btn-primary {
-    background-color: #0056b3; 
+    background-color: #e24358; 
     border: none; 
 }
 
 .btn-primary:hover {
-    background-color: #004494; 
+    background-color: rgb(148, 0, 0); 
 }
+
+
+.original-price {
+    text-decoration: line-through;
+    color: #6c757d; 
+  }
+  
+  .discounted-price {
+    color: red; 
+  }
+  
+  .current-price {
+    color: #212529; 
+  
+  }

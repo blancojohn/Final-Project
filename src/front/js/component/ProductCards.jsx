@@ -1,43 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "../../styles/productcards.css";
+import "../../styles/productcards.css"; 
 
 export const ProductCards = () => {
   const [products, setProducts] = useState([]);
 
+  // Utilizamos useEffect para cargar los productos 
   useEffect(() => {
-    axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')
+    // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
+    // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
+    // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
+    axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')  
       .then((response) => {
+        // Actualizamos el usestate con los productos recibidos
         setProducts(response.data);
       })
       .catch((error) => {
-        console.error('There was an error fetching the products', error);
+        // En caso de error, lo imprimimos en la consola para no buscar como locos que paso
+        console.error('Hubo un error al buscar los productos', error);
       });
   }, []);
 
   return (
     <div className="container mt-4">
+      <div className="mb-4">
+        <hr />
+        <h2 className='h3'>Nuestros productos:</h2>
+      </div>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        {products.map((product) => (
-          <div className="col" key={product.id}>
-            <div className="card shadow h-100">
-              <img src={product.image_url} className="card-img-top img-fluid" alt={product.name} />
-              <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.description}</p>
-              </div>
-              <div className="card-footer">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h3 className="text-muted">{product.price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</h3>
-                    <p className="card-text"><small className="text-muted">Category: {product.category}</small></p>
+        {products.map((product) => {
+          // Calculamos el precio original y con descuento aquí
+           // Aca se usa .toLocaleString() para formatear el precio segun la moneda Chilena
+          const originalPrice = product.price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });  
+          const factorDescuento = product.discount || 0; // puse 0 por si el descuento es nulo o indefinido
+          const precioConDescuento = (product.price - product.price * factorDescuento).toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+
+          return (
+            <div className="col" key={product.id}>
+              <div className="card shadow h-100">
+                <img src={product.image_url} className="card-img-top img-fluid" alt={product.name} />
+                <div className="card-body">
+                  <h5 className="card-title text-danger">{product.name}</h5>
+                  <p className="card-text">{product.description}</p>
+                </div>
+                <div className="card-footer">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      {factorDescuento > 0 ? (
+                        <>
+                          <h3 className="original-price">{originalPrice}</h3>
+                          <h3 className="discounted-price">{precioConDescuento}</h3>
+                        </>
+                      ) : (
+                        <h3 className="current-price">{originalPrice}</h3>
+                      )}
+                      <p className="card-text"><small className="text-muted">Categoría: {product.category}</small></p>
+                    </div>
+                    <button className="btn btn-primary btn-small">Agregar Al Carro</button>
                   </div>
-                  <button className="btn btn-primary">Agregar Al Carro</button>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

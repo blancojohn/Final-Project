@@ -17,17 +17,17 @@
   
   .carousel-control-prev-icon:hover,
   .carousel-control-next-icon:hover {
-    background-color: #8d2e80
+    background-color: #e24358
   }
   
   .carousel-indicators li {
-    background-color: rgba(104, 51, 105, 0.658); 
+    background-color: rgba(184, 11, 11, 0.658); 
     border-radius: 50%; 
     margin: 0 5px; 
     padding: 5px; 
   }
   
   .carousel-indicators .active {
-    background-color: #8d2e80; 
+    background-color: #e24358; 
   }
   

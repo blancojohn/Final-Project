@@ -22,19 +22,19 @@ def add_product():
     #se obtiene la info
     body = request.get_json()
     
-    # esto es solo una validacion de que no falten campos
+    # esto es solo una validacion de que no falten campos, la busque en google xd
     if 'name' not in body or 'price' not in body or 'image_url' not in body:
-        raise APIException('Missing information', status_code=400)
+        raise APIException('Missing information', status_code=400) 
 
     # creamos el nuevo producto
     new_product = Product(
         name=body['name'],
         price=body['price'],
         image_url=body['image_url'],
-        description=body.get('description', '')  # el . get lo use porque es opcional agregar una descripcion
+        description=body.get('description', '')  # el . get lo use porque es opcional agregar una descripcion asi que puede estar vacia
     )
 
-    #Commit para la base de datos
+    #Commit para la base de datos, porfavor recordar usar pipenv run migrate y upgrade para crear las tablas
     db.session.add(new_product)
     db.session.commit()
 

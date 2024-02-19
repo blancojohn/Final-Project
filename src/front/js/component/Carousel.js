@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel as BootstrapCarousel, Container } from 'react-bootstrap';
 import "../../styles/MyCarousel.css";
-
+// Este componente es el carrusel con las imagenes stock
 export const MyCarousel = () => {
   return (
     <Container className='mt-3'>
@@ -9,7 +9,7 @@ export const MyCarousel = () => {
         <BootstrapCarousel.Item>
           <img
             className="d-block w-100 carousel-img"
-            src="https://laikamascotas.cl/cdn-cgi/image/format=auto,quality=80,sharpen=1/https://laikapp.s3.amazonaws.com/dev_images_banners/3021936fb1eff3058307220d3ac0e7dc_1706891133.jpg"
+            src="https://cms-www.chewy.com/contentAsset/image/2d1d3cb5-0a5b-48f9-a444-78bbe8f97553/fileAsset/byInode/1/filter/Resize,Jpeg/jpeg_q/100/resize_w/1440/resize_h/296/2024-02_IMC_FebSitewide_Multi_HHCB-LG.jpg"
             alt="First slide"
           />
         </BootstrapCarousel.Item>
