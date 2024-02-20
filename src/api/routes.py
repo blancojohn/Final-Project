@@ -7,7 +7,7 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 api = Blueprint('api', __name__)
@@ -76,7 +76,14 @@ def registra_usuario():
         return jsonify({"msg":"Error, por favor intenta de nuevo"}), 400
     
     return jsonify({"msg":"Registro , por favor iniciar sesión"}), 200
-    
+
+@api.route('/me')
+@jwt_required()
+def me():
+    id = get_jwt_identity()
+    user = User.query.get(id)
+    return jsonify(user.serialize()), 200
+  
 
 
         
