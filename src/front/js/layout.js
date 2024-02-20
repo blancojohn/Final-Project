@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import ProductDetails from "./component/ProductDetails.jsx";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
@@ -10,6 +11,7 @@ import injectContext from "./store/appContext";
 
 import { ChewyNavbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
 
 //create your first component
 const Layout = () => {
@@ -28,6 +30,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" /> 
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route path="/product/:id" element={<ProductDetails />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

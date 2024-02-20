@@ -1,9 +1,0 @@
-.card {
-    max-height: 250px; 
-    max-width: 350px;
-    overflow: hidden; 
-  }
-  
-.card-img {
-    object-fit: contain;
-}
