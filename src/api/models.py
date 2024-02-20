@@ -4,9 +4,11 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    name = db.Column(db.String(200), default="")
+    email = db.Column(db.String(200), unique=True, nullable=False)
+    password = db.Column(db.String(500), nullable=False)
+    direction = db.Column(db.String(1000), nullable=False)
+    is_active = db.Column(db.Boolean(), default=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -14,10 +16,23 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "name": self.name,
             "email": self.email,
+            "direction": self.direction,
+            "is_active": self.is_active
             # do not serialize the password, its a security breach
         }
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
+    def update(self):    
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 # nuestra clase Product donde definimos todo lo necesario para mostrar en la pagina, incluyendo el nuevo agregado descuento
 class Product(db.Model):
@@ -27,7 +42,7 @@ class Product(db.Model):
     image_url = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=True)
     category = db.Column(db.String(50), nullable=False)
-    discount = db.Column(db.Float, nullable=True, default=0.0)  #Asegurarse de que el valor introducido sea un float x ejemplo 0.20 = 20% de descuento
+    discount = db.Column(db.Float, nullable=True, default=0.0)  # Asegurarse de que el valor introducido sea un float por ejemplo 0.20 = 20% de descuento
 
     def serialize(self):
         return {
@@ -38,14 +53,12 @@ class Product(db.Model):
             "description": self.description,
             "category": self.category,
             "discount": self.discount,
-
         }
-
 
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))  
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     username = db.Column(db.String(80))
     rating = db.Column(db.Integer)
     text = db.Column(db.String(500))
