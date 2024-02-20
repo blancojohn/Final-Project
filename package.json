@@ -81,6 +81,8 @@
 		"react-bootstrap": "^2.10.1",
 		"react-dom": "^16.8.4",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-router-dom": "^6.3.0",
+		"react-strap": "^0.0.1",
+		"reactstrap": "^9.2.2"
 	}
 }

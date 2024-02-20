@@ -40,3 +40,21 @@ class Product(db.Model):
             "discount": self.discount,
 
         }
+
+
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))  
+    username = db.Column(db.String(80))
+    rating = db.Column(db.Integer)
+    text = db.Column(db.String(500))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "product_id": self.product_id,
+            "username": self.username,
+            "rating": self.rating,
+            "text": self.text
+        }

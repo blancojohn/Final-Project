@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product  #HACER AQUI LOS IMPORTS DE LOS MODELOS
+from api.models import db, User, Product, Review  #HACER AQUI LOS IMPORTS DE LOS MODELOS
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -51,4 +51,25 @@ def add_product():
 
     
     return jsonify(new_product.serialize()), 201
+
+
+
+#ENDPOINTS DE REVIEWS
+@api.route('/reviews/<int:product_id>', methods=['GET'])
+def get_reviews(product_id):
+    reviews = Review.query.filter_by(product_id=product_id).all()
+    return jsonify([review.serialize() for review in reviews])
+
+@api.route('/reviews/<int:product_id>', methods=['POST'])
+def post_review(product_id):
+    review_data = request.json
+    review = Review(
+        product_id=product_id,
+        username=review_data['username'],
+        rating=review_data['rating'],
+        text=review_data['text']
+    )
+    db.session.add(review)
+    db.session.commit()
+    return jsonify(review.serialize()), 201
 
