@@ -145,3 +145,11 @@ def me():
     id = get_jwt_identity()
     user = User.query.get(id)
     return jsonify(user.serialize()), 200
+
+
+
+
+
+
+
+
