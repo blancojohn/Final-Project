@@ -13,13 +13,13 @@ export const ChewyNavbar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/Perros" className="nav-link custom-link" activeClassName="active">
+            <Nav.Link as={NavLink} to="/Perros" className="nav-link custom-link" activeclassname="active">
               Perros
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/Gatos" className="nav-link custom-link" activeClassName="active">
+            <Nav.Link as={NavLink} to="/Gatos" className="nav-link custom-link" activeclassname="active">
               Gatos
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/Ofertas" className="nav-link custom-link" activeClassName="active">
+            <Nav.Link as={NavLink} to="/Ofertas" className="nav-link custom-link" activeclassname="active">
               Ofertas
             </Nav.Link>
           </Nav>
@@ -34,6 +34,9 @@ export const ChewyNavbar = () => {
             <Nav.Link as={NavLink} to="/account" className="nav-link custom-link">
               <i className="fa fa-user custom-icon" aria-hidden="true"></i>
             </Nav.Link>
+            <Nav.Link as={NavLink} to="/register" className="nav-link custom-link" activeclassname="active">
+              Registrate
+            </Nav.Link> 
           </Nav>
         </Navbar.Collapse>
       </Container>

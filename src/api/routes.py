@@ -109,7 +109,7 @@ def inicia_sesion_usuario():
 
 @api.route('/register', methods = ['POST'])
 def registra_usuario():
-
+    print(request.get_json())
     name = request.json.get('name', '')
     email = request.json.get('email')
     direction = request.json.get('direction', '')
@@ -137,7 +137,7 @@ def registra_usuario():
     if not user:
         return jsonify({"msg":"Error, por favor intenta de nuevo"}), 400
     
-    return jsonify({"msg":"Registro , por favor iniciar sesión"}), 200
+    return jsonify({"success":"Registro satisfactorio, por favor iniciar sesión"}), 200
 
 @api.route('/me')
 @jwt_required()
