@@ -45,16 +45,13 @@ export const ChewyNavbar = () => {
                     <i className="fa fa-user custom-icon" aria-hidden="true"></i>
                   </Nav.Link>
                   <Nav.Link onClick={handleLogout} className="nav-link custom-link" activeClassName="active">
-                    Logout
+                    Cerrar Cesion
                   </Nav.Link>
                 </>
               ) : (
                 <>
-                  <Nav.Link as={NavLink} to="/login" className="nav-link custom-link" activeClassName="active">
-                    Login
-                  </Nav.Link>
                   <Nav.Link as={NavLink} to="/register" className="nav-link custom-link" activeClassName="active">
-                    Regístrate
+                    Regístrate / Login
                   </Nav.Link>
                 </>
               )
