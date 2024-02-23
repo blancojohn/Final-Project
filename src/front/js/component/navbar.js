@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { Context } from '../store/appContext';  
+import { Context } from '../store/appContext';
 import "../../styles/navbar.css";
 
 export const ChewyNavbar = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
-//ESTE CODIGO ES PARA EL LOGOUT, VUELVE A LA PANTALLA PRINCIPAL Y REMUEVE EL TOKEN DE ACCESO
-  const handleLogout = () => {
-    sessionStorage.removeItem("accessToken"); 
+  /* const navigate = useNavigate(); */
+  //ESTE CODIGO ES PARA EL LOGOUT, VUELVE A LA PANTALLA PRINCIPAL Y REMUEVE EL TOKEN DE ACCESO
+  /* const handleLogout = () => {
+    sessionStorage.removeItem("accessToken");
     actions.logout(); // Actualiza el estado de login utilizando la acción logout
     navigate("/");
-  };
+  }; */
 
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" className="custom-navbar">
@@ -20,45 +20,56 @@ export const ChewyNavbar = () => {
         <Navbar.Brand as={NavLink} to="/" className="me-2 custom-brand">
           Mascotienda
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/Perros" className="nav-link custom-link" activeClassName="active">
-              Perros
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/Gatos" className="nav-link custom-link" activeClassName="active">
-              Gatos
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/Ofertas" className="nav-link custom-link" activeClassName="active">
-              Ofertas
-            </Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav.Link as={NavLink} to="/cart" className="nav-link custom-link">
-              <i className="fa fa-shopping-cart custom-icon" aria-hidden="true"></i>
-              <span className="cart-count">0</span>
-            </Nav.Link>
-            {
-              store.isLoggedIn ? (
-                <>
-                  <Nav.Link as={NavLink} to="/account" className="nav-link custom-link">
-                    <i className="fa fa-user custom-icon" aria-hidden="true"></i>
+        {
+          !!store.user ? (
+            <>
+
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Collapse id="responsive-navbar-nav">
+                <span className="nav-link">{store?.user?.name || ''}</span>
+                <Nav.Link as={NavLink} to="/me" className="nav-link custom-link" activeclassname="active">
+                  Mi Cuenta
+                </Nav.Link>
+                <button type='button' className='nav-link btn-danger text-light' onClick={actions.logOut}>Cerrar Sesión</button>
+              </Navbar.Collapse>
+            </>
+          ) : (
+            <>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                  <Nav.Link as={NavLink} to="/Perros" className="nav-link custom-link" activeclassname="active">
+                    Perros
                   </Nav.Link>
-                  <Nav.Link onClick={handleLogout} className="nav-link custom-link" activeClassName="active">
-                    Cerrar Cesion
+                  <Nav.Link as={NavLink} to="/Gatos" className="nav-link custom-link" activeclassname="active">
+                    Gatos
                   </Nav.Link>
-                </>
-              ) : (
-                <>
-                  <Nav.Link as={NavLink} to="/register" className="nav-link custom-link" activeClassName="active">
-                    Regístrate / Login
+                  <Nav.Link as={NavLink} to="/Ofertas" className="nav-link custom-link" activeclassname="active">
+                    Ofertas
                   </Nav.Link>
-                </>
-              )
-            }
-          </Nav>
-        </Navbar.Collapse>
+                </Nav>
+                <Nav.Link as={NavLink} to="/register" className="nav-link custom-link" activeclassname="active">
+                  Regístrate / Login
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/cart" className="nav-link custom-link">
+                  <i className="fa fa-shopping-cart custom-icon" aria-hidden="true"></i>
+                  <span className="cart-count">0</span>
+                </Nav.Link>
+              </Navbar.Collapse>
+
+            </>
+          )
+        }
       </Container>
     </Navbar>
   );
 };
+
+
+
+
+
+
+
+
+

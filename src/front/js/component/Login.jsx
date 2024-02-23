@@ -1,50 +1,22 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 
 const Login = () => {
-  const { actions } = useContext(Context);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const success = await actions.login(email, password);
-    if (success) {
-      navigate("/");
-    } else {
-      alert("Credenciales inválidas");
-    }
-  };
+  const { store, actions } = useContext(Context)
 
   return (
-    <div className="w-50 mx-auto my-5">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email:</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Contraseña:</label>
-          <input
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary w-100">Iniciar Sesión</button>
-      </form>
-    </div>
+    <form onSubmit={actions.handleSubmitLogin} className='w-50 mx-auto my-5'>
+      <div className='mb-3'>
+        <label htmlFor='email' className='form-label'>Email</label>
+        <input className='form-control' type='text' name='email' id='email' placeholder='Email' value={store.loginUser.email} onChange={actions.handleChangeLogin}></input>
+      </div>
+      <div className='mb-3'>
+        <label htmlFor='password' className='form-label'>Contraseña</label>
+        <input className='form-control' type='password' name='password' id='password' placeholder='Contraseña' value={store.loginUser.password} onChange={actions.handleChangeLogin}></input>
+      </div>
+      <button className='btn btn-primary w-100'>Login</button>
+    </form>
   );
-};
+}
 
 export default Login;

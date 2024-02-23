@@ -92,15 +92,16 @@ def inicia_sesion_usuario():
     user = User.query.filter_by(email=email).first()
 
     if not user:
-        return jsonify({"msg":"User/Name son incorrectos"}), 401
+        return jsonify({"msg":"User/Password son incorrectos"}), 401
     
     if not check_password_hash(user.password, password):
-        return jsonify({"msg":"User/Name son incorrectos"}), 401
+        return jsonify({"msg":"User/Password son incorrectos"}), 401
     
     expirate_token = datetime.timedelta(days = 1)
     access_token = create_access_token(identity = user.id, expires_delta = expirate_token)
 
     datos = {
+        "success": "Inicio de sesión exitoso",
         "access_token":access_token,
         "user": user.serialize()
     }
