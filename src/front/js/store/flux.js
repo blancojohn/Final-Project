@@ -17,6 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				},
 			],
 			/* objeto para registrar usuario */
+			cart: [], // aqui guardamos los productos en el carrito
+
 			registerUser: {
 				name: '',
 				email: '',
@@ -31,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			access_token: null,
 			isLoggedIn: false,  // esto revisa si el usuario esta logeado se cambia con un state
 			currentUser: null,  // esto es para saber que usuario es el que esta logeado actualmente, aun nose como usarlo para el carrito pero ya veremos xd
-			apiURL: "http://127.0.0.1:3001",
+			apiURL: "https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev",
 		},
 		actions: {
 			/* ACCIONES */
@@ -184,6 +186,126 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.removeItem('user')
 				sessionStorage.removeItem('access_token')
 			},
+			addToCart: (productId, quantity = 1) => {
+				const { apiURL, access_token } = getStore();
+				// verifica si esque el usuario esta logeado a traves del access token
+				if (!access_token) {
+				  toast.info("Por favor inicia sesión para añadir productos al carrito.");
+				  return;
+				}
+		
+				// url del enpoint para gregar al carrito
+				const url = `${apiURL}/api/cart`;
+				const body = {
+				  product_id: productId,
+				  quantity,
+				};
+		
+				// nuestras opciones
+				// aca se utiliza bearer token que es basicamente una llave para q la app sepa q usuario esta usandola
+				const requestOptions = {
+				  method: "POST",
+				  body: JSON.stringify(body),
+				  headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${access_token}`,
+				  },
+				};
+		
+				// aca uso la funcion getfetch hecha por john
+				getActions().getFetch(url, requestOptions)
+				  .then(response => {
+					if (!response.ok) {
+					  throw new Error('Error al añadir al carrito');
+					}
+					return response.json();
+				  })
+				  .then(newCartItem => {
+					// actualizamos el estado del carrito con el nuevoproducto
+					setStore(prevState => ({
+					  cart: [...prevState.cart, newCartItem] // se crea una copia d lo q ya habia en el carrito + lo nuevo
+					}));
+					toast.success("Producto añadido al carrito.");
+				  })
+				  .catch(error => {
+					// si hay error mostramos un mensaje y hacemos un console log
+					toast.error("Error al añadir producto al carrito.");
+					console.error(error);
+				  });
+			  },
+			  // un get para obtener los articulos dentor del carrito
+			  getCart: () => {
+				const { apiURL, access_token } = getStore();
+				// primero se ve si el usuario esta lgeado
+				if (!access_token) {
+				  // si no retornamos nada
+				  return;
+				}
+		
+				// url del endpoint
+				const url = `${apiURL}/api/cart`;
+				const requestOptions = {
+				  method: "GET",
+				  headers: {
+					"Authorization": `Bearer ${access_token}`, // denuevo usamos bearer para revisar quien esta logeado
+				  },
+				  
+				};
+		
+				// usamos la funcion getfetch de john
+				getActions().getFetch(url, requestOptions)
+				  .then(response => {
+					if (!response.ok) {
+					  throw new Error('Error al obtener el carrito');
+					}
+					return response.json();
+				  })
+				  .then(cartItems => {
+					// actualizamos el carrito con los items obtenidos
+					setStore({
+					  cart: cartItems
+					});
+				  })
+				  .catch(error => {
+					// si hay error al obtener los productos hacemos un console log para poder hacer debugging
+					console.error("Error al obtener los productos del carrito.", error);
+				  });
+			  },
+			  // accion para eliminar cosas del carro
+			  removeFromCart: (itemId) => {
+				const { apiURL, access_token } = getStore();
+				// url endpoint
+				const url = `${apiURL}/api/cart/${itemId}`;
+		
+				const requestOptions = {
+				  method: "DELETE",
+				  headers: {
+					"Authorization": `Bearer ${access_token}`, // nuevamente usamos bearer
+				  },
+				};
+		
+				// usamos la funcion getfetch de john
+				getActions().getFetch(url, requestOptions)
+				  .then(response => {
+					if (!response.ok) {
+					  throw new Error('Error al eliminar del carrito');
+					}
+					return response.json();
+				  })
+				  .then(() => {
+					// actualizamos el carrito eliminando el producto
+					setStore(prevState => ({
+					  cart: prevState.cart.filter(item => item.id !== itemId)
+					}));
+					toast.success("Producto eliminado del carrito.");
+				  })
+				  .catch(error => {
+					// error
+					toast.error("Error al eliminar producto del carrito.");
+					console.error(error);
+				  });
+			  },
+			  //funcion de getfetch de john
 			getFetch: (url, solicitud) => {
 				return fetch(url, solicitud)
 			}

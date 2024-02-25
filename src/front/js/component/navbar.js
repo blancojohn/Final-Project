@@ -14,6 +14,8 @@ export const ChewyNavbar = () => {
     navigate("/");
   }; */
 
+  const cartItemCount = store.cartItems?.length || 0; //cuantos item hy en el carrito
+
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" className="custom-navbar">
       <Container>
@@ -26,7 +28,20 @@ export const ChewyNavbar = () => {
 
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
-                <span className="nav-link">{store?.user?.name || ''}</span>
+              <Nav.Link as={NavLink} to="/Perros" className="nav-link custom-link" activeclassname="active">
+                    Perros
+                  </Nav.Link>
+                  <Nav.Link as={NavLink} to="/Gatos" className="nav-link custom-link" activeclassname="active">
+                    Gatos
+                  </Nav.Link>
+                  <Nav.Link as={NavLink} to="/Ofertas" className="nav-link custom-link" activeclassname="active">
+                    Ofertas
+                  </Nav.Link>
+                  <Nav.Link as={NavLink} to="/cart" className="nav-link custom-link">
+                  <i className="fa fa-shopping-cart custom-icon" aria-hidden="true"></i>
+                  <span className="cart-count">0</span>
+                </Nav.Link>
+                <span className="nav-link text-decoration-none text-light"> Bienvenido, {store?.user?.name || ''}</span>
                 <Nav.Link as={NavLink} to="/me" className="nav-link custom-link" activeclassname="active">
                   Mi Cuenta
                 </Nav.Link>
@@ -53,7 +68,7 @@ export const ChewyNavbar = () => {
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/cart" className="nav-link custom-link">
                   <i className="fa fa-shopping-cart custom-icon" aria-hidden="true"></i>
-                  <span className="cart-count">0</span>
+                  <span className="cart-count">{cartItemCount}</span>
                 </Nav.Link>
               </Navbar.Collapse>
 
