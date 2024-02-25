@@ -17,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				},
 			],
 			/* objeto para registrar usuario */
-			cart: [], // aqui guardamos los productos en el carrito
+			cartItems: [], // aqui guardamos los productos en el carrito
 
 			registerUser: {
 				name: '',
@@ -133,6 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 						sessionStorage.setItem('access_token', datos.access_token)
 						sessionStorage.setItem('user', JSON.stringify(datos.user))
+						getActions().getCart(); // obtener carrito
 					}
 					console.log(datos)
 				}).catch(error => console.log(error))
@@ -186,126 +187,120 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.removeItem('user')
 				sessionStorage.removeItem('access_token')
 			},
-			addToCart: (productId, quantity = 1) => {
+			addToCart: (product, quantity = 1) => {
 				const { apiURL, access_token } = getStore();
 				// verifica si esque el usuario esta logeado a traves del access token
 				if (!access_token) {
-				  toast.info("Por favor inicia sesión para añadir productos al carrito.");
-				  return;
+					toast.info("Por favor inicia sesión para añadir productos al carrito.");
+					return;
 				}
-		
+
 				// url del enpoint para gregar al carrito
 				const url = `${apiURL}/api/cart`;
 				const body = {
-				  product_id: productId,
-				  quantity,
+					product_id: product.id,
+					quantity,
 				};
-		
+
 				// nuestras opciones
 				// aca se utiliza bearer token que es basicamente una llave para q la app sepa q usuario esta usandola
 				const requestOptions = {
-				  method: "POST",
-				  body: JSON.stringify(body),
-				  headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${access_token}`,
-				  },
+					method: "POST",
+					body: JSON.stringify(body),
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${access_token}`,
+					},
 				};
-		
+
 				// aca uso la funcion getfetch hecha por john
 				getActions().getFetch(url, requestOptions)
-				  .then(response => {
-					if (!response.ok) {
-					  throw new Error('Error al añadir al carrito');
-					}
-					return response.json();
-				  })
-				  .then(newCartItem => {
-					// actualizamos el estado del carrito con el nuevoproducto
-					setStore(prevState => ({
-					  cart: [...prevState.cart, newCartItem] // se crea una copia d lo q ya habia en el carrito + lo nuevo
-					}));
-					toast.success("Producto añadido al carrito.");
-				  })
-				  .catch(error => {
-					// si hay error mostramos un mensaje y hacemos un console log
-					toast.error("Error al añadir producto al carrito.");
-					console.error(error);
-				  });
-			  },
-			  // un get para obtener los articulos dentor del carrito
-			  getCart: () => {
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Error al añadir al carrito');
+						}
+						return response.json();
+					})
+					.then(newCartItem => {
+						// llamada a getCart para actualizar el estado global del carrito
+						getActions().getCart();
+						toast.success("Producto añadido al carrito.");
+					})
+					.catch(error => {
+						toast.error("Error al añadir producto al carrito.");
+						console.error(error);
+					});
+			},
+			// un get para obtener los articulos dentor del carrito
+			getCart: () => {
 				const { apiURL, access_token } = getStore();
 				// primero se ve si el usuario esta lgeado
 				if (!access_token) {
-				  // si no retornamos nada
-				  return;
+					// si no retornamos nada
+					return;
 				}
-		
+
 				// url del endpoint
 				const url = `${apiURL}/api/cart`;
 				const requestOptions = {
-				  method: "GET",
-				  headers: {
-					"Authorization": `Bearer ${access_token}`, // denuevo usamos bearer para revisar quien esta logeado
-				  },
-				  
+					method: "GET",
+					headers: {
+						"Authorization": `Bearer ${access_token}`, // denuevo usamos bearer para revisar quien esta logeado
+					},
+
 				};
-		
+
 				// usamos la funcion getfetch de john
 				getActions().getFetch(url, requestOptions)
-				  .then(response => {
-					if (!response.ok) {
-					  throw new Error('Error al obtener el carrito');
-					}
-					return response.json();
-				  })
-				  .then(cartItems => {
-					// actualizamos el carrito con los items obtenidos
-					setStore({
-					  cart: cartItems
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Error al obtener el carrito');
+						}
+						return response.json();
+					})
+					.then(cartItems => {
+						setStore({
+							...getStore(), // mantener lo q ya esta dentro del carrito
+							cartItems: cartItems // actualizar items del carrito
+						});
+					})
+					.catch(error => {
+						// si hay error al obtener los productos hacemos un console log para poder hacer debugging
+						console.error("Error al obtener los productos del carrito.", error);
 					});
-				  })
-				  .catch(error => {
-					// si hay error al obtener los productos hacemos un console log para poder hacer debugging
-					console.error("Error al obtener los productos del carrito.", error);
-				  });
-			  },
-			  // accion para eliminar cosas del carro
-			  removeFromCart: (itemId) => {
+			},
+			// accion para eliminar cosas del carro
+			removeFromCart: (itemId) => {
 				const { apiURL, access_token } = getStore();
 				// url endpoint
 				const url = `${apiURL}/api/cart/${itemId}`;
-		
+
 				const requestOptions = {
-				  method: "DELETE",
-				  headers: {
-					"Authorization": `Bearer ${access_token}`, // nuevamente usamos bearer
-				  },
+					method: "DELETE",
+					headers: {
+						"Authorization": `Bearer ${access_token}`, // nuevamente usamos bearer
+					},
 				};
-		
+
 				// usamos la funcion getfetch de john
 				getActions().getFetch(url, requestOptions)
-				  .then(response => {
-					if (!response.ok) {
-					  throw new Error('Error al eliminar del carrito');
-					}
-					return response.json();
-				  })
-				  .then(() => {
-					// actualizamos el carrito eliminando el producto
-					setStore(prevState => ({
-					  cart: prevState.cart.filter(item => item.id !== itemId)
-					}));
-					toast.success("Producto eliminado del carrito.");
-				  })
-				  .catch(error => {
-					// error
-					toast.error("Error al eliminar producto del carrito.");
-					console.error(error);
-				  });
-			  },
-			  //funcion de getfetch de john
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Error al eliminar del carrito');
+						}
+						return response.json();
+					})
+					.then(() => {
+						// Llamada a getCart para actualizar el estado global del carrito
+						getActions().getCart();
+						toast.success("Producto eliminado del carrito.");
+					})
+					.catch(error => {
+						toast.error("Error al eliminar producto del carrito.");
+						console.error(error);
+					});
+			},
+			//funcion de getfetch de john
 			getFetch: (url, solicitud) => {
 				return fetch(url, solicitud)
 			}

@@ -74,7 +74,7 @@ class Review(db.Model):
             "text": self.text
         }
     
-
+                #tdo este carrito esta hecho a pura preuba y error pero pero funciona :) porfa no tocar o capaz se rompe xd
 class CartItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # Clave primaria del carrito
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # foreign key al usuario
@@ -87,9 +87,27 @@ class CartItem(db.Model):
 
     # serializamos el carrito en JSON
     def serialize(self):
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "product_id": self.product_id,
-            "quantity": self.quantity
-        }
+        # llama al producto asociado cn el item
+        product = Product.query.get(self.product_id)
+        if product:
+            # si el producto existe llama tdos los datos necesarios pra mostrar en el fton
+            return {
+                "id": self.id,
+                "user_id": self.user_id,
+                "product_id": self.product_id,
+                "quantity": self.quantity,
+                "product": {
+                    "name": product.name,
+                    "price": product.price,
+                    "discount": product.discount,
+                    
+                }
+            }
+        else:
+            # si el prducto no existe retorna esto
+            return {
+                "id": self.id,
+                "user_id": self.user_id,
+                "product_id": self.product_id,
+                "quantity": self.quantity
+            }

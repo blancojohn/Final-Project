@@ -39,7 +39,7 @@ export const ChewyNavbar = () => {
                   </Nav.Link>
                   <Nav.Link as={NavLink} to="/cart" className="nav-link custom-link">
                   <i className="fa fa-shopping-cart custom-icon" aria-hidden="true"></i>
-                  <span className="cart-count">0</span>
+                  <span className="cart-count">{cartItemCount}</span>
                 </Nav.Link>
                 <span className="nav-link text-decoration-none text-light"> Bienvenido, {store?.user?.name || ''}</span>
                 <Nav.Link as={NavLink} to="/me" className="nav-link custom-link" activeclassname="active">
