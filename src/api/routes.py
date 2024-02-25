@@ -38,6 +38,7 @@ def add_product():
     db.session.add(new_product)
     db.session.commit()
 
+@api.route('/products/<>', methods=['POST'])
     
     return jsonify(new_product.serialize()), 201
 

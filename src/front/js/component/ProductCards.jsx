@@ -6,7 +6,7 @@ export const ProductCards = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')
+    axios.get('https://sturdy-space-memory-v66qjgp7xrrq26gwp-3001.app.github.dev/api/products')
       .then((response) => {
         setProducts(response.data);
       })
