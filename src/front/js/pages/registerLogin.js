@@ -3,7 +3,7 @@ import { Card, Row, Col, Button, Container } from "react-bootstrap";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import Register from "../component/Register.jsx";
 import Login from "../component/Login.jsx";
-import "../../styles/registerLogin.css"; 
+import "../../styles/registerLogin.css";
 
 export const RegisterLogin = () => {
     // el estado que guarda cual de los 2 formularios se muestran
