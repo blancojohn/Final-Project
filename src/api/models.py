@@ -10,6 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(500), nullable=False)
     direction = db.Column(db.String(1000), nullable=False)
     is_active = db.Column(db.Boolean(), default=True)
+    cart_items = db.relationship('CartItem', back_populates='user', cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -71,4 +72,24 @@ class Review(db.Model):
             "username": self.username,
             "rating": self.rating,
             "text": self.text
+        }
+    
+
+class CartItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)  # Clave primaria del carrito
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # foreign key al usuario
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)  # foreign key al producto
+    quantity = db.Column(db.Integer, default=1, nullable=False)  # cantidad de productos en el carrito
+    # relacion entre el usuario y el producto la cual seria muchos a muchos. muchos usuarios pueden agregar muchos productos y los productos pueden
+    # ser agregados por muchos usuarios.
+    user = db.relationship('User', back_populates='cart_items')  
+    product = db.relationship('Product')
+
+    # serializamos el carrito en JSON
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "product_id": self.product_id,
+            "quantity": self.quantity
         }

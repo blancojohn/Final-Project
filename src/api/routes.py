@@ -147,9 +147,50 @@ def me():
     return jsonify(user.serialize()), 200
 
 
+#ENDPOINTS DEL CARRITO
 
+@api.route('/cart', methods=['POST'])
+@jwt_required()
+#el jwt requred de aqui es para q solamente se pueda usar el carrito si estas logeado, no tenemos funcion de comprar anonimo sin logeo.
+def add_to_cart():
+    # agarra el ID del usuario logeado en ese momento
+    user_id = get_jwt_identity()
+    # obtiene el id del producto y la cantidad del mismo
+    product_id = request.json.get('product_id')
+    quantity = request.json.get('quantity', 1)  # por default la cantidad es 1
+    
+    # crea un nuevo item en el carrito con los siguientes datos
+    cart_item = CartItem(user_id=user_id, product_id=product_id, quantity=quantity)
+    # agrega el item al carrito en la base de datos
+    db.session.add(cart_item)
+    # hago commit a los cambios en la base de datos
+    db.session.commit()
+    # retorna el item serializado como respuesta con un 201 lo q significa exito 
+    return jsonify(cart_item.serialize()), 201
 
+@api.route('/cart', methods=['GET'])
+@jwt_required()
+def get_cart():
+    # se agarra la id del usuario con jwt
+    user_id = get_jwt_identity()
+    # busco el usuario especifico en la base d datos con el id que me devuelva jwt
+    user = User.query.get(user_id)
+    # y aqui simplemente se retorna con el get los items dentro del carrito de dicho usuario
+    return jsonify([item.serialize() for item in user.cart_items]), 200
 
-
-
-
+@api.route('/cart/<int:item_id>', methods=['DELETE'])
+@jwt_required()
+def remove_from_cart(item_id):
+    # nuevamente obtenemos el id
+    user_id = get_jwt_identity()
+    # se busca el item dentro del carrito del usuario que se quiere eliminar
+    cart_item = CartItem.query.filter_by(id=item_id, user_id=user_id).first()
+    if cart_item:
+        # si el item existe lo borramos de la base de datos cn db.session.delete
+        db.session.delete(cart_item)
+        # guardamos los cambios despues de eliminarlo
+        db.session.commit()
+        # devolvemos un mensaje de exito
+        return jsonify({'success': 'Item removido'}), 200
+    # si el item no se encuentra en la base de datos devolvemos error 404
+    return jsonify({'error': 'Item no encontrado en la base de datos'}), 404

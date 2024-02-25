@@ -40,6 +40,9 @@ export const ProductCards = () => {
           const originalPrice = product.price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });  
           const factorDescuento = product.discount || 0; // puse 0 por si el descuento es nulo o indefinido
           const precioConDescuento = (product.price - product.price * factorDescuento).toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+          // el descuento se obtiene multiplicando el precio original (product.price) por el descuento (factorDescuento).
+          // por ejemplo, si el factorDescuento es 0.2 , y el precio original es 100, el valor del descuento sería 20%.
+          // entonces, el precio con descuento sería 100 - 20 = 80.
 
           return (
             <div className="col" key={product.id}>
