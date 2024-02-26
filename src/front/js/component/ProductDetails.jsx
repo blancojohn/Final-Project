@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReviewForm from "../component/ReviewForm.jsx";
+import { Context } from '../store/appContext';
 
 const ProductDetails = () => {
+  const { actions } = useContext(Context);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -104,7 +106,7 @@ const ProductDetails = () => {
                       })
                     )}
                   </p>
-                  <button className="btn btn-primary">Agregar al Carro</button>
+                  <button className="btn btn-primary" onClick={() => actions.addToCart(product)}>Agregar Al Carro</button>
                 </div>
               </div>
             </div>

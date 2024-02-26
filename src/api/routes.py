@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Review  #HACER AQUI LOS IMPORTS DE LOS MODELOS
+from api.models import db, User, Product, Review, CartItem  #HACER AQUI LOS IMPORTS DE LOS MODELOS
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -217,3 +217,26 @@ def remove_from_cart(item_id):
         return jsonify({'success': 'Item removido'}), 200
     # si el item no se encuentra en la base de datos devolvemos error 404
     return jsonify({'error': 'Item no encontrado en la base de datos'}), 404
+
+
+@api.route('/cart/<int:item_id>', methods=['PUT'])
+@jwt_required()
+# funcion para actualizar el carrito utilizamos PUT.
+def update_cart_item(item_id):
+    # obtenemos id del usuario
+    user_id = get_jwt_identity()
+    # buscamos el item cn el id del mismo y del respectivo user
+    cart_item = CartItem.query.filter_by(id=item_id, user_id=user_id).first()
+    if cart_item:
+        # si item existe actualizamos la cantidad
+        new_quantity = request.json.get('quantity')
+        if new_quantity and new_quantity > 0:
+            cart_item.quantity = new_quantity
+            db.session.commit()  # hacemos commit en la db
+            # return si es exitoso
+            return jsonify({'success': 'Cantidad actualizada correctamente'}), 200
+        else:
+            # return si no es valido
+            return jsonify({'error': 'Cantidad proporcionada no es válida'}), 400
+    # si el item no existe return error
+    return jsonify({'error': 'Item no encontrado en el carrito'}), 404

@@ -17,6 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				},
 			],
 			/* objeto para registrar usuario */
+			cartItems: [], // aqui guardamos los productos en el carrito
+
 			registerUser: {
 				name: '',
 				email: '',
@@ -31,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			access_token: null,
 			isLoggedIn: false,  // esto revisa si el usuario esta logeado se cambia con un state
 			currentUser: null,  // esto es para saber que usuario es el que esta logeado actualmente, aun nose como usarlo para el carrito pero ya veremos xd
-			apiURL: "http://127.0.0.1:3001",
+			apiURL: "https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev",
 		},
 		actions: {
 			/* ACCIONES */
@@ -131,6 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 						sessionStorage.setItem('access_token', datos.access_token)
 						sessionStorage.setItem('user', JSON.stringify(datos.user))
+						getActions().getCart(); // obtener carrito
 					}
 					console.log(datos)
 				}).catch(error => console.log(error))
@@ -184,6 +187,151 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.removeItem('user')
 				sessionStorage.removeItem('access_token')
 			},
+			addToCart: (product, quantity = 1) => {
+				const { apiURL, access_token, cartItems } = getStore();
+				// verifica si esque el usuario esta logeado a traves del access token
+				if (!access_token) {
+					toast.info("Por favor inicia sesión para añadir productos al carrito.");
+					return;
+				}
+			
+				// Check if product already exists in cart
+				const existingCartItemIndex = cartItems.findIndex(item => item.product_id === product.id);
+				if (existingCartItemIndex !== -1) {
+					// Producto ya existe en el carrito, actualizar cantidad
+					const url = `${apiURL}/api/cart/${cartItems[existingCartItemIndex].id}`; // Asumiendo que cada item tiene un ID único en el carrito
+					const body = {
+						quantity: cartItems[existingCartItemIndex].quantity + quantity,
+					};
+			
+					const requestOptions = {
+						method: "PUT", // Cambiar método a PUT para actualizar
+						body: JSON.stringify(body),
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${access_token}`,
+						},
+					};
+			
+					getActions().getFetch(url, requestOptions)
+						.then(response => {
+							if (!response.ok) {
+								throw new Error('Error al actualizar cantidad en el carrito');
+							}
+							return response.json();
+						})
+						.then(updatedCartItem => {
+							getActions().getCart(); // Actualizar estado del carrito
+							toast.success("Cantidad del producto actualizada en el carrito.");
+						})
+						.catch(error => {
+							toast.error("Error al actualizar producto en el carrito.");
+							console.error(error);
+						});
+				} else {
+					// Producto no existe en el carrito, agregar como nuevo
+					const url = `${apiURL}/api/cart`;
+					const body = {
+						product_id: product.id,
+						quantity,
+					};
+			
+					const requestOptions = {
+						method: "POST",
+						body: JSON.stringify(body),
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${access_token}`,
+						},
+					};
+			
+					getActions().getFetch(url, requestOptions)
+						.then(response => {
+							if (!response.ok) {
+								throw new Error('Error al añadir al carrito');
+							}
+							return response.json();
+						})
+						.then(newCartItem => {
+							getActions().getCart(); // Actualizar estado del carrito
+							toast.success("Producto añadido al carrito.");
+						})
+						.catch(error => {
+							toast.error("Error al añadir producto al carrito.");
+							console.error(error);
+						});
+				}
+			},
+			// un get para obtener los articulos dentor del carrito
+			getCart: () => {
+				const { apiURL, access_token } = getStore();
+				// primero se ve si el usuario esta lgeado
+				if (!access_token) {
+					// si no retornamos nada
+					return;
+				}
+
+				// url del endpoint
+				const url = `${apiURL}/api/cart`;
+				const requestOptions = {
+					method: "GET",
+					headers: {
+						"Authorization": `Bearer ${access_token}`, // denuevo usamos bearer para revisar quien esta logeado
+					},
+
+				};
+
+				// usamos la funcion getfetch de john
+				getActions().getFetch(url, requestOptions)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Error al obtener el carrito');
+						}
+						return response.json();
+					})
+					.then(cartItems => {
+						setStore({
+							...getStore(), // mantener lo q ya esta dentro del carrito
+							cartItems: cartItems // actualizar items del carrito
+						});
+					})
+					.catch(error => {
+						// si hay error al obtener los productos hacemos un console log para poder hacer debugging
+						console.error("Error al obtener los productos del carrito.", error);
+					});
+			},
+			// accion para eliminar cosas del carro
+			removeFromCart: (itemId) => {
+				const { apiURL, access_token } = getStore();
+				// url endpoint
+				const url = `${apiURL}/api/cart/${itemId}`;
+
+				const requestOptions = {
+					method: "DELETE",
+					headers: {
+						"Authorization": `Bearer ${access_token}`, // nuevamente usamos bearer
+					},
+				};
+
+				// usamos la funcion getfetch de john
+				getActions().getFetch(url, requestOptions)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Error al eliminar del carrito');
+						}
+						return response.json();
+					})
+					.then(() => {
+						// Llamada a getCart para actualizar el estado global del carrito
+						getActions().getCart();
+						toast.success("Producto eliminado del carrito.");
+					})
+					.catch(error => {
+						toast.error("Error al eliminar producto del carrito.");
+						console.error(error);
+					});
+			},
+			//funcion de getfetch de john
 			getFetch: (url, solicitud) => {
 				return fetch(url, solicitud)
 			}

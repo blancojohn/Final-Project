@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import ProductDetails from "./component/ProductDetails.jsx";
+import Cart from "./component/Cart.jsx";
 import { Home } from "./pages/home";
 import RegisterLogin from "./pages/registerLogin.js";
 import Me from "./component/Me.jsx";
@@ -32,6 +33,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route path="/product/:id" element={<ProductDetails />} />
                         <Route element={<RegisterLogin />} path="/register" />
+                        <Route path="/cart" element={<Cart />} />
                         <Route element={<Me />} path="/me" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

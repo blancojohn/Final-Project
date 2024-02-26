@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import "../../styles/productcards.css"; 
 import { Link } from 'react-router-dom';
+import { Context } from '../store/appContext';
 
 export const ProductCards = () => {
 
   const [showModal, setShowModal] = useState(false);
-
+  const { actions } = useContext(Context);
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
   const [products, setProducts] = useState([]);
@@ -67,7 +68,7 @@ export const ProductCards = () => {
                       )}
                       <p className="card-text"><small className="text-muted">Categoría: {product.category}</small></p>
                     </div>
-                    <button className="btn btn-primary btn-sm">Agregar Al Carro</button>
+                    <button className="btn btn-primary btn-sm" onClick={() => actions.addToCart(product)}>Agregar Al Carro</button>
                   </div>
                 </div>
               </div>
