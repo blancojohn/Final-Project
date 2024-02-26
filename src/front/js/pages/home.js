@@ -3,9 +3,8 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { MyCarousel } from '../component/Carousel';
-import { CategoryCards } from "../component/CategoryCards.jsx";
 import { ProductCards } from "../component/ProductCards.jsx";
-
+import Barrainfo from "../component/BarraInfo.jsx";
 
 
 
@@ -14,7 +13,7 @@ export const Home = () => {
 
 	return (
 		<><MyCarousel />
-		{/* <CategoryCards /> */}
+		<Barrainfo />
 		<ProductCards />
 		</>
 	)

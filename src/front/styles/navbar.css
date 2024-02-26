@@ -1,5 +1,5 @@
 .custom-navbar {
-    background: linear-gradient(90deg, #4e8df5, #bc21ca); /* use una gradient para el color de fondo */
+    background: linear-gradient(90deg, #d63131, #e24358); /* use una gradient para el color de fondo */
     font-size: 20px; 
   }
   
@@ -14,7 +14,7 @@
   }
   
   .custom-link:hover {
-    color: #ffcc00; 
+    color: #e24358; 
   }
   
   .custom-icon {
@@ -23,7 +23,7 @@
   }
   
   .cart-count {
-    background-color: #ffcc00; 
+    background-color: #e24358; 
     color: #282c34; 
     border-radius: 50%; 
     padding: 5px 8px; 

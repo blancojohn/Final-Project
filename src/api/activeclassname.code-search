@@ -1,0 +1,23 @@
+# Query: activeclassnam
+# ContextLines: 1
+
+5 results - 1 file
+
+src\front\js\component\navbar.js:
+  25            <Nav className="me-auto">
+  26:             <Nav.Link as={NavLink} to="/Perros" className="nav-link custom-link" activeclassname="active">
+  27                Perros
+  28              </Nav.Link>
+  29:             <Nav.Link as={NavLink} to="/Gatos" className="nav-link custom-link" activeclassname="active">
+  30                Gatos
+  31              </Nav.Link>
+  32:             <Nav.Link as={NavLink} to="/Ofertas" className="nav-link custom-link" activeclassname="active">
+  33                Ofertas
+
+  46                    </Nav.Link>
+  47:                   <Nav.Link onClick={handleLogout} className="nav-link custom-link" activeclassname="active">
+  48                      Cerrar Sesion
+
+  52                  <>
+  53:                   <Nav.Link as={NavLink} to="/register" className="nav-link custom-link" activeclassname="active">
+  54                      Regístrate / Login

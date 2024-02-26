@@ -1,0 +1,27 @@
+
+.fade-enter {
+    opacity: 0; /* cambia la opacidad a 0 */
+    transform: scale(0.9); /* escala el elemento par q sea mas peque antes d desaparecer */
+}
+
+
+.fade-enter-active {
+    opacity: 1; 
+    transform: scale(1); 
+    transition: opacity 300ms, transform 300ms; 
+    /* esto es para ver cuanto dura la animacion si no les gusta pueden hacer que sea mas corto o mas largo
+    , recuerden cambiarlo en el enter y el exit */
+}
+
+
+.fade-exit {
+    opacity: 1; 
+    transform: scale(1); 
+}
+
+
+.fade-exit-active {
+    opacity: 0; 
+    transform: scale(0.9); 
+    transition: opacity 300ms, transform 300ms; 
+}
