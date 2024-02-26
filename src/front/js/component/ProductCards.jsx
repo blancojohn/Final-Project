@@ -13,14 +13,11 @@ export const ProductCards = () => {
 
   // Utilizamos useEffect para cargar los productos 
   useEffect(() => {
-<<<<<<< HEAD
-    axios.get('https://sturdy-space-memory-v66qjgp7xrrq26gwp-3001.app.github.dev/api/products')
-=======
+    
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')  
->>>>>>> 05ae70075dd2664be484de607c6bba39b3eafabd
       .then((response) => {
         // Actualizamos el usestate con los productos recibidos
         setProducts(response.data);

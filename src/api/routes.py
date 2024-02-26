@@ -52,26 +52,35 @@ def add_product():
     #Commit para la base de datos, porfavor recordar usar pipenv run migrate y upgrade para crear las tablas
     db.session.add(new_product)
     db.session.commit()
+    return jsonify(new_product.serialize()), 201
+
+@api.route('/Categoria/<Perros>', methods=['GET'])
+def get_Perros(Perros):
+    # agarrar categoria
+    categoria = Perros.query.get(Perros)
+    if categoria is None:
+        # si no hay categoria 404
+        abort(404)
+    return jsonify(categoria.serialize()), 200
+
+@api.route('/Categoria/<Gatos>', methods=['GET'])
+def get_Gatos(Gatos):
+    # agarrar categoria
+    categoria = Gatos.query.get(Gatos)
+    if categoria is None:
+        # si no hay categoria 404
+        abort(404)
+    return jsonify(categoria.serialize()), 200
 
 
 
-    @app.route('/categoria/<Perros>')
-def seleccionar_categoria(Perros):
-    if tipo_animal == 'perros':
-        return 'Has seleccionado la categoría perros.'
-    else:
-        return 'La categoría seleccionada no es perros.'
-
-if _name_ == '_main_':
-    app.run()
- return jsonify(new_product.serialize()), 201
 
 
    
 
 
 
-#ENDPOINTS DE REVIEWS
+##ENDPOINTS DE REVIEWS
 @api.route('/reviews/<int:product_id>', methods=['GET'])
 def get_reviews(product_id):
     reviews = Review.query.filter_by(product_id=product_id).all()
