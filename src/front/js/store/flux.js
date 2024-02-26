@@ -42,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getMessage: async () => {
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+					const resp = await fetch(process.env.a_URL + "/api/hello");
 					const data = await resp.json();
 					setStore({ message: data.message });
 					return data;

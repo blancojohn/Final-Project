@@ -11,6 +11,10 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 import mercadopago
 
 
+
+
+
+
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -224,7 +228,7 @@ def update_cart_item(item_id):
 
 
 #ENDPOINT MERCADOPAGO
-@api.route('/create_payment', methods=['POST'])
+@api.route('/mercadopago/createpayment', methods=['POST'])
 @jwt_required()
 def create_payment():
     # obtenemos el user id con jwt
@@ -266,6 +270,7 @@ def create_payment():
 
     # aca se crea la preferencia dependiendo del resultado de arriba
     preference_result = sdk.preference().create(preference)
+    print("Respuesta de MercadoPago:", preference_result)
     # si la creacion de la preferencia es success devuelve 201 q es exito
     if preference_result["status"] == 201:
         # obteemos el id de la preferencia creada

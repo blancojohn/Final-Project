@@ -75,8 +75,10 @@
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.5.1",
 		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@mercadopago/sdk-react": "^0.0.18",
 		"axios": "^1.6.7",
 		"bootstrap": "^5.3.3",
+		"mercadopago": "^2.0.8",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-bootstrap": "^2.10.1",
