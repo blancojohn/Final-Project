@@ -11,7 +11,6 @@ initMercadoPago('TEST-54f75dac-aebb-4c0e-9d74-72414a1da510');
 const Cart = () => {
   const { store, actions } = useContext(Context);
   const [totalAmount, setTotalAmount] = useState(0);
-  const { apiURL, access_token } = getStore();
   useEffect(() => {
     // Calcular el monto total cuando cambian los elementos del carrito
     const calculateTotalAmount = () => {
@@ -34,12 +33,12 @@ const Cart = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${access_token}` // ESTE TOKEN DA NULL Y UNDEFINED NOSE COMO  ARREGLARLO!!
+          "Authorization": `Bearer ${store.token}` // ESTE TOKEN DA NULL Y UNDEFINED NOSE COMO  ARREGLARLO!!
         },
         body: JSON.stringify({ cartItems: store.cartItems })
       });
       const data = await response.json();
-
+      console.log(store.token) // ESTE CONSOLE LOG DA UNDEFINED, JOHN TIENE QUE SALIR EL TOKEN GUARDADO EN LOCALSTORAGE !!
       if (!response.ok) throw new Error('Error al crear la preferencia de pago');
 
       // iniciamos el checkout
