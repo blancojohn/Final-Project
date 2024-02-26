@@ -1,0 +1,41 @@
+Este archivo existe por el simple motivo de poder explicar nuestro models.py
+esto por si hay alguna duda al momento de revisar nuestro proyecto y querer saber mas informacion de nuestro BackEnd.
+
+
+Modelo User
+== nuestro modelo User representa un usuario registrado en nuestra base de datos.
+== el usuario tiene información básica como nombre, correo electrónico, dirección y active que seria si nuestro usuario esta activo o no.
+== la relacion con cart_items es una relación uno-a-muchos con nuestro modelo CartItem. Osea que un usuario puede tener muchos cart_items (items en el carro). 
+back_populates se usa para conectar ambos modelos, y cascade="all, delete-orphan" es por que si se elimina un usuario, tambien se eliminan sus cart_items.
+== serialize convierte la info del usuario en un diccionario que se puede transformar facil en JSON, esto es para enviar los datos a la API. La contraseña no se seriuliza por razones de seguridad.
+== save, update y delete son para manejar la base de datos.
+
+
+
+Modelo Product
+== basicament un producto que se puede comprar en el sitio web.
+== incluye nuestros detalles de los productos: nombre, descripcion, precio, descuento.
+
+Modelo Review
+== esto es nuestro modelo de reviews osea que un usuario puede dejar una calificacion de un producto.
+== lo vinculamos al modelo Product por una clave foranea a product_id, osea que cada review esta vinculada a un producto ESPECIFICO.
+
+Modelo CartItem
+== CART ITEM = ITEM DENTRO DEL CART de un usuario.
+== Tiene claves foraneas a user.id y product.id, cda elemento del carrito esta asociado a un PRODUCTO ESPECIFICO y un USUARIO ESPECIFICO.
+
+
+
+NUESTRA EXPLICACION DE ENTIDAD-RELACION:
+
+== user es una relación muchos-a-uno con modelo User,  cada CartItem esta asociado a un usuario. back_populates aqui conecta User y CartItem.
+== product es una relación muchos-a-uno con modelo Product, cada CartItem va conectado a un producto unico.
+
+un user puede tener muchos elementos en el carrito, que forman su carrito de compras, al cual se le puede hacer checkout (con la API de mercadopago).
+cada element en el carrito esta vinculado a un producto especifico, del cual se desea comprar una cierta cantidad.
+los usuarios pueden dejar reviews en los productos, pueden colocar una calificación y un texto.
+
+
+pd: nose q mas agregar a este archivo pero lo dejo aqui en caso de que necesiten estar al dia cn mas o menos como funcionan nuestros modelos porque esta 
+enredadisimo aksjdaksd
+-nicolas 
