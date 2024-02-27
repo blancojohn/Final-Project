@@ -56,23 +56,7 @@ def add_product():
 
 
 
-@api.route('/Categoria/<Perros>', methods=['GET'])
-def get_Perros(Perros):
-    # agarrar categoria
-    categoria = Perros.query.get(Perros)
-    if categoria is None:
-        # si no hay categoria 404
-        abort(404)
-    return jsonify(categoria.serialize()), 200
 
-@api.route('/Categoria/<Gatos>', methods=['GET'])
-def get_Gatos(Gatos):
-    # agarrar categoria
-    categoria = Gatos.query.get(Gatos)
-    if categoria is None:
-        # si no hay categoria 404
-        abort(404)
-    return jsonify(categoria.serialize()), 200
 
 
 

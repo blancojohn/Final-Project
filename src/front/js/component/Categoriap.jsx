@@ -21,8 +21,12 @@ export const Categoriap = () => {
     axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')
       .then((response) => {
 
+        //Filtramos las categoria de perros
+        const Perros = response.data.filter((data) => data.category === "Perros")
+
         // Actualizamos el usestate con los productos recibidos
-        setProducts(response.data);
+        setProducts(Perros);
+
       })
       .catch((error) => {
         // En caso de error, lo imprimimos en la consola para no buscar como locos que paso

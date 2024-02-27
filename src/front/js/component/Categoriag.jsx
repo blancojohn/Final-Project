@@ -20,9 +20,11 @@ export const Categoriag = () => {
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')
       .then((response) => {
-
+        //Filtramos las categoria de gatos
+        const Gatos = response.data.filter((data) => data.category === "Gatos")
+        
         // Actualizamos el usestate con los productos recibidos
-        setProducts(response.data);
+        setProducts(Gatos);
       })
       .catch((error) => {
         // En caso de error, lo imprimimos en la consola para no buscar como locos que paso
