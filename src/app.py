@@ -21,7 +21,10 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 # para solicitudes CORS desde elf ront
-CORS(app, origins=["https://urban-space-doodle-wrr9g5wj496r2gp77-3000.app.github.dev"])
+CORS(app, resources={r"/api/*": {"origins": "https://urban-space-doodle-wrr9g5wj496r2gp77-3000.app.github.dev"}})
+
+
+
 
 
 # database condiguration

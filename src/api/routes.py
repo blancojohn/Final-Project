@@ -9,7 +9,7 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import mercadopago
-
+from flask_cors import cross_origin
 
 
 
@@ -250,9 +250,10 @@ def create_payment():
         #aqui van los items q le pasamos
         "items": [
             {
-                "title": item.product.name,  
-                "unit_price": item.product.price,  
-                "quantity": item.quantity,  
+                "title": item.product.name,  #extraemos el nombre del producto
+                "quantity": item.quantity,  #la cantidad
+                "unit_price": item.product.price,  #el precio
+                #todo esto viene de nuestro modelo de cartitems
             } for item in cart_items
         ],
         #aqui va la info del comprador que en este caso solo necesitamos pasar el email
@@ -279,3 +280,19 @@ def create_payment():
     else:
         # y obviamente si falla necesita tambien un jsonify de error para q el usuario vea q ha fallado
         return jsonify({"error": "No se pudo crear la preferencia de pago"}), 500
+
+
+@api.route('/checkout_success')
+def checkout_success():
+    
+    return 'Success'
+
+@api.route('/checkout_failure')
+def checkout_failure():
+   
+    return 'Failure'
+
+@api.route('/checkout_pending')
+def checkout_pending():
+   
+    return 'Pending'

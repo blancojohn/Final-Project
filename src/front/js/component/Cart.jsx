@@ -3,16 +3,16 @@ import { Context } from '../store/appContext';
 import { Container, Table, Button, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { initMercadoPago } from '@mercadopago/sdk-react';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 
-// calve publica de mercadopago
-initMercadoPago('TEST-54f75dac-aebb-4c0e-9d74-72414a1da510');
+initMercadoPago('TEST-54f75dac-aebb-4c0e-9d74-72414a1da510'); // inicializamos el api de mercadopago con nuestra PUBLIC KEY
 
 const Cart = () => {
   const { store, actions } = useContext(Context);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [preferenceId, setPreferenceId] = useState(null); // en este state guardamos el preferenceid MUY IMPORTANTE!!
+
   useEffect(() => {
-    // Calcular el monto total cuando cambian los elementos del carrito
     const calculateTotalAmount = () => {
       let total = 0;
       store.cartItems.forEach(item => {
@@ -21,37 +21,35 @@ const Cart = () => {
       });
       setTotalAmount(total);
     };
-
-    calculateTotalAmount();
+    handlePayment(); // LLAMAMOS LA FUNCION DE HANDLEPAYMENT AL MOMENTO DE CARGAR NUESTRO CARRITO
+    calculateTotalAmount(); 
   }, [store.cartItems]);
 
-  // funcion q maneja el poroceso de pago
   const handlePayment = async () => {
+    const token = sessionStorage.getItem('access_token');  // aqui obtenemos nuestro token de autenticacion atraves de nuestra sessionstorage
+
+    if (!token) {
+      console.error('No se encuentra el token de acceso.'); // si no se encuentra el token tiramos error
+      return; 
+    }
+
     try {
-      // llamamos al endpoint
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/mercadopago/createpayment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${store.token}` // ESTE TOKEN DA NULL Y UNDEFINED NOSE COMO  ARREGLARLO!!
+          "Authorization": `Bearer ${token}` 
         },
         body: JSON.stringify({ cartItems: store.cartItems })
-      });
+      });  // hacemos un fetch a nuestro endpoint en el backend y le pasamos todo lo necesario (items del carrito y nuestro token de autorizacion)
+
       const data = await response.json();
-      console.log(store.token) // ESTE CONSOLE LOG DA UNDEFINED, JOHN TIENE QUE SALIR EL TOKEN GUARDADO EN LOCALSTORAGE !!
-      if (!response.ok) throw new Error('Error al crear la preferencia de pago');
 
-      // iniciamos el checkout
-      const mp = new window.MercadoPago(process.env.REACT_APP_MERCADOPAGO_PUBLIC_KEY);
-      mp.checkout({
-        preference: {
-          id: data.preference_id
-        },
-        autoOpen: true // abre el formulario de pago
-      });
+      if (!response.ok) throw new Error('Error al crear la preferencia de pago'); // esto es por si hay una respuesta de error con nuestro fetch
 
+      setPreferenceId(data.preference_id); // aqui actualizo el state que cree que guarda el preferenceid que vendria siendo la respuesta del api de mercadopago
     } catch (error) {
-      console.error('Error en el proceso de pago:', error);
+      console.error('Error en el proceso de pago:', error); // en caso de error tiramos este error
     }
   };
 
@@ -104,7 +102,16 @@ const Cart = () => {
       )}
        <div className="text-end">
         <h5>Total a Pagar: {totalAmount.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</h5>
-        <Button variant="primary" onClick={handlePayment}>Pagar</Button>
+        <Wallet
+          initialization={{
+            preferenceId: preferenceId, // aqui le paso el preferenceid a la wallet para poder crear el boton
+          }}
+          customization={{
+            texts: {
+              valueProp: 'Paga de forma segura y rápida con MercadoPago' //esto es solo el texto que trae por defecto se puede cambiar 
+            }
+          }}
+        />
       </div>
     </Container>
   );
