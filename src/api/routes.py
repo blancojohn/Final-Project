@@ -54,6 +54,8 @@ def add_product():
     db.session.commit()
     return jsonify(new_product.serialize()), 201
 
+
+
 @api.route('/Categoria/<Perros>', methods=['GET'])
 def get_Perros(Perros):
     # agarrar categoria

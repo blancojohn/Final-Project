@@ -4,7 +4,7 @@ import "../../styles/productcards.css";
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
-export const ProductCards = () => {
+export const Categoriap = () => {
 
   const [showModal, setShowModal] = useState(false);
   const { actions } = useContext(Context);
@@ -18,7 +18,7 @@ export const ProductCards = () => {
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
-    axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products/')
+    axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')
       .then((response) => {
 
         // Actualizamos el usestate con los productos recibidos

@@ -14,6 +14,8 @@ import injectContext, { Context } from "./store/appContext";
 import { ChewyNavbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { ToastContainer } from 'react-toastify';
+import { Categoriap } from "./component/Categoriap.jsx";
+import { Categoriag } from "./component/Categoriag.jsx";
 
 //create your first component
 const Layout = () => {
@@ -29,6 +31,8 @@ const Layout = () => {
                     <ChewyNavbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        <Route element={<Categoriap />} path="/Perros" />
+                        <Route element={<Categoriag />} path="/Gatos" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route path="/product/:id" element={<ProductDetails />} />
