@@ -8,6 +8,11 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+import mercadopago
+
+
+
+
 
 
 api = Blueprint('api', __name__)
@@ -226,3 +231,59 @@ def update_cart_item(item_id):
             return jsonify({'error': 'Cantidad proporcionada no es válida'}), 400
     # si el item no existe return error
     return jsonify({'error': 'Item no encontrado en el carrito'}), 404
+
+
+
+
+#ENDPOINT MERCADOPAGO
+@api.route('/mercadopago/createpayment', methods=['POST'])
+@jwt_required()
+def create_payment():
+    # obtenemos el user id con jwt
+    user_id = get_jwt_identity()
+    # buscamos el usuario y sus productos q metio en el carrito
+    user = User.query.get(user_id)
+    cart_items = CartItem.query.filter_by(user_id=user_id).all()
+
+    # si el carrito esta vacio no se puede comprar :)
+    if not cart_items:
+        return jsonify({"error": "El carrito está vacío"}), 400
+
+    # empezamos a correr mercadopago o lo inicializamos con nuestro access token de prueba encontrado en la pagina de mercadopago
+    sdk = mercadopago.SDK("TEST-1929906353009297-022608-fb805c37e275c7bfe07b1a23e59f7075-506805524")
+
+    # creamos las preferencias para mas informacion pueden leer aqui https://www.mercadopago.cl/developers/es/docs/checkout-bricks/payment-brick/advanced-features/preferences
+    #en resumen es como que cosa le vas a pasar al pago ya sea el nombre del producto precio etc etc..
+    preference = {
+        #aqui van los items q le pasamos
+        "items": [
+            {
+                "title": item.product.name,  
+                "unit_price": item.product.price,  
+                "quantity": item.quantity,  
+            } for item in cart_items
+        ],
+        #aqui va la info del comprador que en este caso solo necesitamos pasar el email
+        "payer": {
+            "email": user.email,  
+        },
+        # las back_urls son como una especie de "toastify" son respuestas q se dan segun como salga tu compra
+        "back_urls": {
+            "success": url_for('api.checkout_success', _external=True), 
+            "failure": url_for('api.checkout_failure', _external=True), 
+            "pending": url_for('api.checkout_pending', _external=True)   
+        },
+        "auto_return": "approved",  #si el pago se aprueba se va directo a success
+    }
+
+    # aca se crea la preferencia dependiendo del resultado de arriba
+    preference_result = sdk.preference().create(preference)
+    print("Respuesta de MercadoPago:", preference_result)
+    # si la creacion de la preferencia es success devuelve 201 q es exito
+    if preference_result["status"] == 201:
+        # obteemos el id de la preferencia creada
+        preference_id = preference_result["response"]["id"]
+        return jsonify({"preference_id": preference_id}), 200  # retornamos el id de la preferencia
+    else:
+        # y obviamente si falla necesita tambien un jsonify de error para q el usuario vea q ha fallado
+        return jsonify({"error": "No se pudo crear la preferencia de pago"}), 500
