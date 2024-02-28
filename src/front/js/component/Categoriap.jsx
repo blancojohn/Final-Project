@@ -4,7 +4,7 @@ import "../../styles/productcards.css";
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
-export const ProductCards = () => {
+export const Categoriap = () => {
 
   const [showModal, setShowModal] = useState(false);
   const { actions } = useContext(Context);
@@ -18,11 +18,15 @@ export const ProductCards = () => {
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
     // RECORDAR ACTUALIZAR ESTE AXIOS.GET CON TU BASE DE DATOS !!!
-    axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products/')
+    axios.get('https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products')
       .then((response) => {
 
+        //Filtramos las categoria de perros
+        const Perros = response.data.filter((data) => data.category === "Perros")
+
         // Actualizamos el usestate con los productos recibidos
-        setProducts(response.data);
+        setProducts(Perros);
+
       })
       .catch((error) => {
         // En caso de error, lo imprimimos en la consola para no buscar como locos que paso

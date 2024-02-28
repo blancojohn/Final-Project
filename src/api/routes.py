@@ -57,13 +57,21 @@ def add_product():
     #Commit para la base de datos, porfavor recordar usar pipenv run migrate y upgrade para crear las tablas
     db.session.add(new_product)
     db.session.commit()
-
-    
     return jsonify(new_product.serialize()), 201
 
 
 
-#ENDPOINTS DE REVIEWS
+
+
+
+
+
+
+   
+
+
+
+##ENDPOINTS DE REVIEWS
 @api.route('/reviews/<int:product_id>', methods=['GET'])
 def get_reviews(product_id):
     reviews = Review.query.filter_by(product_id=product_id).all()
