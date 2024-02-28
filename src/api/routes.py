@@ -252,7 +252,7 @@ def create_payment():
             {
                 "title": item.product.name,  #extraemos el nombre del producto
                 "quantity": item.quantity,  #la cantidad
-                "unit_price": item.product.price,  #el precio
+                "unit_price": item.product.price #el precio cn descuento 
                 #todo esto viene de nuestro modelo de cartitems
             } for item in cart_items
         ],
