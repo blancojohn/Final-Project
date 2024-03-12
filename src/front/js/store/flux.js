@@ -29,11 +29,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				email: '',
 				password: '',
 			},
+			forgotPasswordUser: {
+				
+				email: '',
+				password: '',
+			},
 			user: null,
 			access_token: null,
 			isLoggedIn: false,  // esto revisa si el usuario esta logeado se cambia con un state
 			currentUser: null,  // esto es para saber que usuario es el que esta logeado actualmente, aun nose como usarlo para el carrito pero ya veremos xd
-			apiURL: "https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev",
+			apiURL: "http://127.0.0.1:3001"
 		},
 		actions: {
 			/* ACCIONES */
@@ -146,6 +151,48 @@ const getState = ({ getStore, getActions, setStore }) => {
 					loginUser: loginUser
 				})
 			},
+			handleSubmitForgotPassword : (e) => {
+				e.preventDefault()
+				const { forgotPasswordUser, apiURL } = getStore()
+				const { getFetch } = getActions()
+				 
+				const url = `${apiURL}/api/forgotpassword/${forgotPasswordUser}`
+				const raw = JSON.stringify(
+					forgotPasswordUser
+				)
+				const solicitud = {
+					method: "PUT",
+					body: raw,
+					headers: {
+						"Content-Type": "application/json"
+					}
+				}
+				const request = getFetch(url, solicitud)
+				request.then((response) => response.json()).then((datos) =>{
+					if(datos.msg){
+						toast.error(datos.msg)
+					} else {
+						toast.success(datos.success)
+						setStore({
+							forgotPasswordUser:{
+								email: '',
+								password: '',
+							}
+							
+						})
+					}
+					console.log(datos)
+				}).catch(error => console.log(error))	
+			},
+			handleChangeForgotPassword : (e) => {
+				const { forgotPasswordUser } = getStore()
+				const { name, value } = e.target
+				forgotPasswordUser[name] = value
+				setStore({
+					forgotPasswordUser: forgotPasswordUser
+				})
+			},
+
 			checkCurrentUser: () => {
 				if (sessionStorage.getItem('access_token')) {
 					setStore({
@@ -343,6 +390,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 export default getState;
+
+
 
 
 

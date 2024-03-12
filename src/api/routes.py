@@ -91,6 +91,35 @@ def post_review(product_id):
     return jsonify(review.serialize()), 201
 
 #ENDPOINTS DE USUARIO
+@api.route('/forgotpassword/<int:id>', methods=['PUT'])
+def recordar_contraseña(id):
+    email = request.json.get('email') #Necesito email para saber cual usuario cambiará contraseña
+    password = request.json.get('password')
+
+    if not email:
+        return jsonify({"msg": "Email es requerido"}), 400 #validación completar campo obligatoriamente
+    if not password:
+        return jsonify({"msg":"Nueva contraseña es requerida"}), 400 #validación completar campo obligatoriamente
+    
+    user = User.query.filter_by(id=id).first() #id = primary key de mis usuarios
+    user.password = generate_password_hash(password) # genero la nueva contraseña encriptada
+    user.update() #guardo  la nueva contraseña 
+    """ expirate_token = datetime.timedelta(days = 1)
+        access_token = create_access_token(identity = user.id, expires_delta = expirate_token) """
+    if not user:
+        return jsonify({"msg":"Usuario no existe"}), 404 #valido existencia de email en mi base de datos
+    
+    if user.email == email: #valido ids y emails correspondan según fueron registrados en la base de datos
+        
+        datos = { #por ahora datos contiene success y new_password para comprobar que llego a la ruta y actualizo campo en base de datos
+            "success":"Cambio de contraseña con éxito",
+            "new_password":password 
+            #"access_token": access_token
+        }
+        return jsonify(datos), 200
+    else:
+        return jsonify({"msg":"Usuario no existe"}), 404
+    
 @api.route('/login', methods=['POST'])
 def inicia_sesion_usuario():
 
@@ -304,3 +333,13 @@ def checkout_failure():
 def checkout_pending():
    
     return 'Pending'
+    
+    
+
+
+
+
+
+    
+
+

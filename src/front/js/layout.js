@@ -16,6 +16,7 @@ import { Footer } from "./component/footer";
 import { ToastContainer } from 'react-toastify';
 import { Categoriap } from "./component/Categoriap.jsx";
 import { Categoriag } from "./component/Categoriag.jsx";
+import  ForgotPassword  from "./component/ForgotPassword.jsx";
 
 //create your first component
 const Layout = () => {
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route path="/product/:id" element={<ProductDetails />} />
                         <Route element={<RegisterLogin />} path="/register" />
+                        <Route element={<ForgotPassword />} path="/forgotpassword" />
                         <Route path="/cart" element={<Cart />} />
                         <Route element={<Me />} path="/me" />
                         <Route element={<h1>Not found!</h1>} />
