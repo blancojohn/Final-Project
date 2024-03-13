@@ -91,6 +91,26 @@ def post_review(product_id):
     return jsonify(review.serialize()), 201
 
 #ENDPOINTS DE USUARIO
+
+
+@api.route('/findUserByEmail', methods=['POST'])
+def find_user_by_email():
+    data = request.get_json()
+    email = data.get('email')
+
+    if not email:
+        return jsonify({'msg': 'El email es requerido.'}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({'id': user.id}), 200
+    else:
+        return jsonify({'msg': 'Usuario no encontrado.'}), 404
+
+
+
+
+
 @api.route('/forgotpassword/<int:id>', methods=['PUT'])
 def recordar_contraseña(id):
     email = request.json.get('email') #Necesito email para saber cual usuario cambiará contraseña
