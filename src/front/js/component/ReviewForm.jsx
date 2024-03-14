@@ -1,30 +1,34 @@
-import React, { useState, useContext } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { Context } from '../store/appContext'; 
+import React, { useState } from "react";
+import { Button, Form, FormGroup, Label, Input, FormText, Textarea } from 'reactstrap'; // Make sure to install `reactstrap` if you haven't already
 
 const ReviewForm = ({ productId, submitReview }) => {
-  const { store } = useContext(Context);
+  const [username, setUsername] = useState("");
   const [rating, setRating] = useState(0);
   const [text, setText] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (store.access_token) {
-      const username = store.user?.name; 
-      submitReview({ username, rating, text });
-      setRating(0);
-      setText("");
-    } else {
-      alert("Porfavor Inicia Sesion para dejar Una Review!");
-    }
+    submitReview({ username, rating, text });
+    setUsername("");
+    setRating(0);
+    setText("");
   };
-
-  if (!store.access_token) {
-    return <p>Porfavor Inicia Sesion para dejar Una Review!</p>;
-  }
 
   return (
     <Form onSubmit={handleSubmit} className="my-4">
+      <FormGroup>
+        <Label for="username">Nombre</Label>
+        <Input
+          type="text"
+          name="username"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          placeholder="Escribe tu Nombre"
+          className="mb-3"
+        />
+      </FormGroup>
       <FormGroup>
         <Label for="rating">Puntaje</Label>
         <Input

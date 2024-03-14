@@ -21,8 +21,7 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 # para solicitudes CORS desde elf ront
-CORS(app, resources={r"/api/*": {"origins": "*"}})
-
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
 
 

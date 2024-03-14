@@ -1,3 +1,4 @@
+import { number } from 'prop-types';
 import { toast } from 'react-toastify';
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -30,7 +31,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				password: '',
 			},
 			forgotPasswordUser: {
-				
 				email: '',
 				password: '',
 			},
@@ -151,83 +151,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					loginUser: loginUser
 				})
 			},
-			findUserIdByEmail: (email) => {
-				return new Promise((resolve, reject) => {
-					const { apiURL } = getStore();
-					const url = `${apiURL}/api/findUserByEmail`;
-			
-					const solicitud = {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify({ email }),
-					};
-			
-					fetch(url, solicitud)
-					.then(response => response.json())
-					.then(data => {
-						if(data.msg) {
-							toast.error(data.msg);
-							reject(data.msg);
-						} else {
-							setStore({
-								forgotPasswordUser: {
-									...getStore().forgotPasswordUser,
-									id: data.id, 
-								}
-							});
-							resolve(data.id);
-						}
-					})
-					.catch(error => {
-						console.error("Error al buscar el ID del usuario:", error);
-						toast.error("Error al buscar el usuario.");
-						reject(error);
-					});
-				});
-			},
-			handleSubmitForgotPassword: (e) => {
-				e.preventDefault();
-				const { forgotPasswordUser, apiURL } = getStore();
-				const { getFetch } = getActions();
-			
-				// Asumiendo que forgotPasswordUser contiene un campo 'id' junto con 'email' y 'password'.
-				// Si no es el caso, necesitarás ajustar la manera en que obtienes el 'id' aquí.
-				const userId = forgotPasswordUser.id; // Obtén el 'id' del usuario que necesita restablecer su contraseña.
-			
-				const url = `${apiURL}/api/forgotpassword/${userId}`; // Usa el 'id' del usuario en la URL.
-			
-				// El cuerpo de la solicitud sigue siendo el mismo, conteniendo el 'email' y 'password'.
-				const raw = JSON.stringify({
-					email: forgotPasswordUser.email,
-					password: forgotPasswordUser.password,
-				});
-			
+			handleSubmitForgotPassword : (e) => {
+				e.preventDefault()
+				const { forgotPasswordUser, apiURL } = getStore()
+				const { getFetch } = getActions()
+				 
+				const url = `${apiURL}/api/forgotpassword/${forgotPasswordUser.email}`
+				const raw = JSON.stringify(
+					forgotPasswordUser
+				)
 				const solicitud = {
 					method: "PUT",
+					body: raw,
 					headers: {
 						"Content-Type": "application/json"
-					},
-					body: raw,
-				};
-			
-				getFetch(url, solicitud)
-				.then((response) => response.json())
-				.then((datos) => {
+					}
+				}
+				const request = getFetch(url, solicitud)
+				request.then((response) => response.json()).then((datos) =>{
 					if(datos.msg){
-						toast.error(datos.msg);
+						toast.error(datos.msg)
 					} else {
-						toast.success(datos.success);
+						toast.success(datos.success)
 						setStore({
 							forgotPasswordUser: {
 								email: '',
 								password: '',
 							}
-						});
+							
+						})
 					}
-					console.log(datos);
-				}).catch(error => console.log(error));
+					console.log(datos)
+				}).catch(error => console.log(error))	
 			},
 			handleChangeForgotPassword : (e) => {
 				const { forgotPasswordUser } = getStore()

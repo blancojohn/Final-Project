@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 
-initMercadoPago('TEST-54f75dac-aebb-4c0e-9d74-72414a1da510'); // inicializamos el api de mercadopago con nuestra PUBLIC KEY esta es solo una test key asi q podemos ponerla aqui
+initMercadoPago('TEST-54f75dac-aebb-4c0e-9d74-72414a1da510'); // inicializamos el api de mercadopago con nuestra PUBLIC KEY
 
 const Cart = () => {
   const { store, actions } = useContext(Context);
