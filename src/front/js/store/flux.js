@@ -151,11 +151,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					loginUser: loginUser
 				})
 			},
-			handleSubmitForgotPassword : (e) => {
+			handleSubmitForgotPassword: (e) => {
 				e.preventDefault()
 				const { forgotPasswordUser, apiURL } = getStore()
 				const { getFetch } = getActions()
-				 
+
 				const url = `${apiURL}/api/forgotpassword/${forgotPasswordUser.email}`
 				const raw = JSON.stringify(
 					forgotPasswordUser
@@ -168,8 +168,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}
 				const request = getFetch(url, solicitud)
-				request.then((response) => response.json()).then((datos) =>{
-					if(datos.msg){
+				request.then((response) => response.json()).then((datos) => {
+					if (datos.msg) {
 						toast.error(datos.msg)
 					} else {
 						toast.success(datos.success)
@@ -178,13 +178,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 								email: '',
 								password: '',
 							}
-							
+
 						})
 					}
 					console.log(datos)
-				}).catch(error => console.log(error))	
+				}).catch(error => console.log(error))
 			},
-			handleChangeForgotPassword : (e) => {
+			handleChangeForgotPassword: (e) => {
 				const { forgotPasswordUser } = getStore()
 				const { name, value } = e.target
 				forgotPasswordUser[name] = value
@@ -211,11 +211,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						"Authorization": `Bearer ${access_token}`
 					}
 				}
+				console.log("Solicitud", solicitud)
 				fetch(url, solicitud)
 					.then(response => {
 						return response.json()
 					})
 					.then(datos => {
+						console.log(datos)
 						if (datos.msg) toast.error(datos.msg)
 						else {
 							console.log(datos)
@@ -241,7 +243,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					toast.info("Por favor inicia sesión para añadir productos al carrito.");
 					return;
 				}
-			
+
 				// Check if product already exists in cart
 				const existingCartItemIndex = cartItems.findIndex(item => item.product_id === product.id);
 				if (existingCartItemIndex !== -1) {
@@ -250,7 +252,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const body = {
 						quantity: cartItems[existingCartItemIndex].quantity + quantity,
 					};
-			
+
 					const requestOptions = {
 						method: "PUT", // Cambiar método a PUT para actualizar
 						body: JSON.stringify(body),
@@ -259,7 +261,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Authorization": `Bearer ${access_token}`,
 						},
 					};
-			
+
 					getActions().getFetch(url, requestOptions)
 						.then(response => {
 							if (!response.ok) {
@@ -282,7 +284,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						product_id: product.id,
 						quantity,
 					};
-			
+
 					const requestOptions = {
 						method: "POST",
 						body: JSON.stringify(body),
@@ -291,7 +293,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Authorization": `Bearer ${access_token}`,
 						},
 					};
-			
+
 					getActions().getFetch(url, requestOptions)
 						.then(response => {
 							if (!response.ok) {

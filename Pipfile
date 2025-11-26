@@ -6,7 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-flask = "*"
 sqlalchemy = "==1.4.46"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
@@ -16,10 +15,12 @@ python-dotenv = "*"
 flask-cors = "*"
 gunicorn = "*"
 cloudinary = "*"
-flask-admin = "*"
 typing-extensions = "*"
 flask-jwt-extended = "*"
 mercadopago = "*"
+colorama = "*"
+flask-admin = "==1.6.0"
+flask = "==2.2.5"
 
 [requires]
 python_version = "3.12"

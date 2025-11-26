@@ -135,7 +135,7 @@ def inicia_sesion_usuario():
         return jsonify({"msg":"User/Password son incorrectos"}), 401
     
     expirate_token = datetime.timedelta(days = 1)
-    access_token = create_access_token(identity = user.id, expires_delta = expirate_token)
+    access_token = create_access_token(identity = str(user.id), expires_delta = expirate_token)
 
     datos = {
         "success": "Inicio de sesión exitoso",
@@ -182,9 +182,8 @@ def registra_usuario():
 def me():
     id = get_jwt_identity()
     user = User.query.get(id)
-    return jsonify(user.serialize()), 200
-
-
+    return jsonify(user.serialize()), 200 
+    
 #ENDPOINTS DEL CARRITO
 
 @api.route('/cart', methods=['POST'])

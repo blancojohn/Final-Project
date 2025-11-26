@@ -22,7 +22,7 @@ const Cart = () => {
       setTotalAmount(total);
     };
     handlePayment(); // LLAMAMOS LA FUNCION DE HANDLEPAYMENT AL MOMENTO DE CARGAR NUESTRO CARRITO
-    calculateTotalAmount(); 
+    calculateTotalAmount();
   }, [store.cartItems]);
 
   const handlePayment = async () => {
@@ -30,15 +30,15 @@ const Cart = () => {
 
     if (!token) {
       console.error('No se encuentra el token de acceso.'); // si no se encuentra el token tiramos error
-      return; 
+      return;
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/mercadopago/createpayment`, {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/mercadopago/createpayment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}` 
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({ cartItems: store.cartItems })
       });  // hacemos un fetch a nuestro endpoint en el backend y le pasamos todo lo necesario (items del carrito y nuestro token de autorizacion)
@@ -100,7 +100,7 @@ const Cart = () => {
           <h4>Tu carrito está vacío</h4>
         </div>
       )}
-       <div className="text-end">
+      <div className="text-end">
         <h5>Total a Pagar: {totalAmount.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</h5>
         <Wallet
           initialization={{

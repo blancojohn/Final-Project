@@ -11,7 +11,8 @@ import "../styles/index.css";
 //import your own components
 import Layout from "./layout";
 
-const cors = require("cors");
+/* const cors = require("cors");  no se como llegoó esta variabla acá pero, mientras estará comentada 
+para que no me tumbe le cliente */
 
 
 //render your react application
