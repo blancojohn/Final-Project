@@ -5,10 +5,7 @@ set -o errexit
 npm install
 npm run build
 
-pipenv install pipenv
-
-pipenv install
-
+pip install pipenv
 
 python -m pipenv install
 
