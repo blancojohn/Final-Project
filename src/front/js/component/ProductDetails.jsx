@@ -14,7 +14,7 @@ const ProductDetails = () => {
     // Fetch product details
     axios
       .get(
-        `https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/products/${id}`
+        `http://127.0.0.1:3001/products/${id}`
       )
       .then((response) => {
         setProduct(response.data);
@@ -26,7 +26,7 @@ const ProductDetails = () => {
     // Fetch reviews for the product
     axios
       .get(
-        `https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/reviews/${id}`
+        `http://127.0.0.1:3001/products/${id}`
       )
       .then((response) => {
         setReviews(response.data);
@@ -39,7 +39,7 @@ const ProductDetails = () => {
   const handleReviewSubmission = (review) => {
     axios
       .post(
-        `https://urban-space-doodle-wrr9g5wj496r2gp77-3001.app.github.dev/api/reviews/${id}`,
+        `http://127.0.0.1:3001/products${id}`,
         review
       )
       .then((response) => {
