@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 
+
 initMercadoPago('TEST-54f75dac-aebb-4c0e-9d74-72414a1da510'); // inicializamos el api de mercadopago con nuestra PUBLIC KEY
+
 
 const Cart = () => {
   const { store, actions } = useContext(Context);
@@ -34,7 +36,7 @@ const Cart = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/api/mercadopago/createpayment`, {
+      const response = await fetch(`${process.env.URL_BACKEND}/api/mercadopago/createpayment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,52 +56,57 @@ const Cart = () => {
   };
 
   return (
-    <Container className="my-5">
-      <h1 className="mb-4 text-center">Tu Carrito</h1>
-      {store.cartItems.length > 0 ? (
-        <Table responsive="md" striped bordered hover className="text-center">
-          <thead className="table-dark">
-            <tr>
-              <th>#</th>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Cantidad</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {store.cartItems.map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.product.name}</td>
-                <td>
-                  {item.product.discount > 0 && (
-                    <>
-                      <del>{item.product.price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</del>
-                      <br />
-                    </>
-                  )}
-                  {(item.product.price * (1 - (item.product.discount || 0))).toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
-                </td>
-                <td>
-                  <Badge bg="secondary" pill>
-                    {item.quantity}
-                  </Badge>
-                </td>
-                <td>
-                  <Button variant="outline-danger" onClick={() => actions.removeFromCart(item.id)}>
-                    <FontAwesomeIcon icon={faTrashAlt} /> Eliminar
-                  </Button>
-                </td>
+    <Container
+      className="my-5">
+      <h1 className="mb-4 text-center">
+        Tu Carrito
+      </h1>
+
+      {
+        store.cartItems.length > 0 ? (
+          <Table responsive="md" striped bordered hover className="text-center">
+            <thead className="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      ) : (
-        <div className="text-center">
-          <h4>Tu carrito está vacío</h4>
-        </div>
-      )}
+            </thead>
+            <tbody>
+              {store.cartItems.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.product.name}</td>
+                  <td>
+                    {item.product.discount > 0 && (
+                      <>
+                        <del>{item.product.price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</del>
+                        <br />
+                      </>
+                    )}
+                    {(item.product.price * (1 - (item.product.discount || 0))).toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
+                  </td>
+                  <td>
+                    <Badge bg="secondary" pill>
+                      {item.quantity}
+                    </Badge>
+                  </td>
+                  <td>
+                    <Button variant="outline-danger" onClick={() => actions.removeFromCart(item.id)}>
+                      <FontAwesomeIcon icon={faTrashAlt} /> Eliminar
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : (
+          <div className="text-center">
+            <h4>Tu carrito está vacío</h4>
+          </div>
+        )}
       <div className="text-end">
         <h5>Total a Pagar: {totalAmount.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</h5>
         <Wallet

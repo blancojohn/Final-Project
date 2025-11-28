@@ -13,8 +13,6 @@ from flask_cors import cross_origin
 
 
 
-
-
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -33,7 +31,7 @@ def get_product_by_id(product_id):
     product = Product.query.get(product_id)
     if product is None:
         # si no hay producto 404
-        abort(404)
+        return jsonify(404), 404
     return jsonify(product.serialize()), 200
 
 
@@ -58,18 +56,6 @@ def add_product():
     db.session.add(new_product)
     db.session.commit()
     return jsonify(new_product.serialize()), 201
-
-
-
-
-
-
-
-
-
-   
-
-
 
 ##ENDPOINTS DE REVIEWS
 @api.route('/reviews/<int:product_id>', methods=['GET'])
@@ -185,7 +171,6 @@ def me():
     return jsonify(user.serialize()), 200 
     
 #ENDPOINTS DEL CARRITO
-
 @api.route('/cart', methods=['POST'])
 @jwt_required()
 #el jwt requred de aqui es para q solamente se pueda usar el carrito si estas logeado, no tenemos funcion de comprar anonimo sin logeo.
@@ -255,9 +240,6 @@ def update_cart_item(item_id):
     # si el item no existe return error
     return jsonify({'error': 'Item no encontrado en el carrito'}), 404
 
-
-
-
 #ENDPOINT MERCADOPAGO
 @api.route('/mercadopago/createpayment', methods=['POST'])
 @jwt_required()
@@ -311,7 +293,6 @@ def create_payment():
     else:
         # y obviamente si falla necesita tambien un jsonify de error para q el usuario vea q ha fallado
         return jsonify({"error": "No se pudo crear la preferencia de pago"}), 500
-
 
 @api.route('/checkout_success')
 def checkout_success():

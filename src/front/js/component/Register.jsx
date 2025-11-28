@@ -9,8 +9,14 @@ const Register = () => {
 
     return (
         <form onSubmit={actions.handleSubmitRegister} className='w-50 mx-auto my-5'>
-            <div className='mb-3'>
-                <label htmlFor='name' className='form-label'>Nombre</label>
+
+            <div
+                className='mb-3'>
+                <label
+                    htmlFor='name'
+                    className='form-label'>
+                    Nombre
+                </label>
                 <input
                     className='form-control'
                     type='text'
@@ -22,8 +28,13 @@ const Register = () => {
                     onChange={actions.handleChangeRegister}>
                 </input>
             </div>
+
             <div className='mb-3'>
-                <label htmlFor='email' className='form-label'>Email</label>
+                <label
+                    htmlFor='email'
+                    className='form-label'>
+                    Email
+                </label>
                 <input
                     className='form-control'
                     type='text'
@@ -35,11 +46,30 @@ const Register = () => {
                     onChange={actions.handleChangeRegister}>
                 </input>
             </div>
-            <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>Contraseña</label>
-                <input className='form-control' type='password' name='password' id='password' placeholder='Contraseña' value={store.registerUser.password} onChange={actions.handleChangeRegister}></input>
+
+            <div
+                className='mb-3'>
+                <label
+                    htmlFor='password'
+                    className='form-label'>
+                    Contraseña
+                </label>
+                <input
+                    value={store.registerUser.password}
+                    onChange={actions.handleChangeRegister}
+                    className='form-control'
+                    type='password'
+                    name='password'
+                    id='password'
+                    placeholder='Contraseña' >
+                </input>
             </div>
-            <button className='btn btn-primary w-100'>Registrarse</button>
+
+            <button
+                className='btn btn-primary w-100'>
+                Registrarse
+            </button>
+
         </form>
     );
 }

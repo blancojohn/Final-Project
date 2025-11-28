@@ -80,7 +80,9 @@ const ProductDetails = () => {
               </div>
               <div className="col-md-6">
                 <div className="card-body">
-                  <h1 className="card-title">{product.name}</h1>
+                  <h1 className="card-title">
+                    {product.name}
+                  </h1>
                   <p className="card-text">{product.description}</p>
                   <p className="card-text">
                     {factorDescuento > 0 ? (
@@ -106,7 +108,13 @@ const ProductDetails = () => {
                       })
                     )}
                   </p>
-                  <button className="btn btn-primary" onClick={() => actions.addToCart(product)}>Agregar Al Carro</button>
+
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => actions.addToCart(product)}>
+                    Agregar Al Carro
+                  </button>
+
                 </div>
               </div>
             </div>

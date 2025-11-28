@@ -12,9 +12,12 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<> <MyCarousel />
+		<>
+
+			<MyCarousel />
 			<Barrainfo />
 			<ProductCards />
+
 		</>
 	)
 

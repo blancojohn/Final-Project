@@ -10,18 +10,28 @@ export const RegisterLogin = () => {
     const [isRegister, setIsRegister] = useState(true);
 
     return (
-        <Container className="mt-5">
-            <Row className="justify-content-center">
+        <Container
+            className="mt-5">
+            <Row
+                className="justify-content-center">
                 <Col md={8} lg={6}>
                     {/* estos son los botones que desencadenan la animacion y el cambio de formulario */}
-                    <div className="text-center mb-4">
-                        <Button variant="primary" className="me-2" onClick={() => setIsRegister(true)}>
+                    <div
+                        className="text-center mb-4">
+                        <Button
+                            variant="primary"
+                            className="me-2"
+                            onClick={() => setIsRegister(true)}>
                             Regístrate
                         </Button>
-                        <Button variant="secondary" onClick={() => setIsRegister(false)}>
+
+                        <Button
+                            variant="secondary"
+                            onClick={() => setIsRegister(false)}>
                             Inicia Sesión
                         </Button>
                     </div>
+
                     {/* SwitchTransition y CSSTransition de react-transition-group se usan aqui porfa acordarse de usar NPM install para que todas las dependencias funcionen */}
                     <SwitchTransition mode="out-in">
                         <CSSTransition
