@@ -14,7 +14,7 @@ const ProductDetails = () => {
     // Fetch product details
     axios
       .get(
-        `http://127.0.0.1:3001/products/${id}`
+        `http://127.0.0.1:3001/api/products/${id}`
       )
       .then((response) => {
         setProduct(response.data);
@@ -26,7 +26,7 @@ const ProductDetails = () => {
     // Fetch reviews for the product
     axios
       .get(
-        `http://127.0.0.1:3001/products/${id}`
+        `http://127.0.0.1:3001/api/reviews/${id}`
       )
       .then((response) => {
         setReviews(response.data);
@@ -39,7 +39,7 @@ const ProductDetails = () => {
   const handleReviewSubmission = (review) => {
     axios
       .post(
-        `http://127.0.0.1:3001/products${id}`,
+        `http://127.0.0.1:3001/api/reviews/${id}`,
         review
       )
       .then((response) => {
@@ -120,16 +120,18 @@ const ProductDetails = () => {
           <ReviewForm productId={id} submitReview={handleReviewSubmission} />
           <div className="mt-3">
             <h2>Reseñas</h2>
-            {reviews.map((review) => (
-              <div key={review.id} className="card mb-3">
-                <div className="card-body">
-                  <h5 className="card-title">
-                    {review.username} ({review.rating} Estrellas)
-                  </h5>
-                  <p className="card-text">{review.text}</p>
+            {
+              Array.isArray(reviews) && reviews.map((review) => (
+                <div key={review.id} className="card mb-3">
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      {review.username} ({review.rating} Estrellas)
+                    </h5>
+                    <p className="card-text">{review.text}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            }
           </div>
         </div>
       </div>
