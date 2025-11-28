@@ -21,6 +21,7 @@ mercadopago = "*"
 colorama = "*"
 flask-admin = "==1.6.0"
 flask = "==2.2.5"
+tomli = "*"
 
 [requires]
 python_version = "3.12"
