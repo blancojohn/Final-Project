@@ -22,11 +22,12 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-# para solicitudes CORS desde elf ront
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
-
-
+# para solicitudes CORS desde el front
+CORS(app, resources={r"/api/*": {"origins": [
+    "https://la-mascotienda.onrender.com",
+    "http://localhost:3000"
+]}})
 
 
 # database condiguration
