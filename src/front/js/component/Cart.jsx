@@ -14,6 +14,9 @@ const Cart = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [preferenceId, setPreferenceId] = useState(null); // en este state guardamos el preferenceid MUY IMPORTANTE!!
 
+  const backendUrl = process.env.URL_BACKEND
+
+
   useEffect(() => {
     const calculateTotalAmount = () => {
       let total = 0;
@@ -36,7 +39,7 @@ const Cart = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.URL_BACKEND}/api/mercadopago/createpayment`, {
+      const response = await fetch(`${backendUrl}/api/mercadopago/createpayment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

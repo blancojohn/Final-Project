@@ -12,9 +12,13 @@ export const Categoriap = () => {
   const handleClose = () => setShowModal(false);
   const [products, setProducts] = useState([]);
 
+  const backendUrl = process.env.BACKEND_URL
+
   // Utilizamos useEffect para cargar los productos 
   useEffect(() => {
-    axios.get('http://127.0.0.1:3001/api/products')
+
+    console.log(backendUrl)
+    axios.get(`${backendUrl}/api/products`)
       .then((response) => {
 
         //Filtramos las categoria de perros

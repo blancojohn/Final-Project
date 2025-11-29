@@ -1,7 +1,12 @@
 import { number } from 'prop-types';
 import { toast } from 'react-toastify';
 
+
+const backendUrl = process.env.BACKEND_URL
+
 const getState = ({ getStore, getActions, setStore }) => {
+
+	console.log(backendUrl)
 	return {
 		store: {
 			message: null,
@@ -38,7 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			access_token: null,
 			isLoggedIn: false,  // esto revisa si el usuario esta logeado se cambia con un state
 			currentUser: null,  // esto es para saber que usuario es el que esta logeado actualmente, aun nose como usarlo para el carrito pero ya veremos xd
-			apiURL: "http://127.0.0.1:3001"
+			apiURL: backendUrl,
 		},
 		actions: {
 			/* ACCIONES */

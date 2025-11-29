@@ -10,11 +10,15 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
 
+  const backendUrl = process.env.BACKEND_URL
+
   useEffect(() => {
     // Fetch product details
+
+    console.log(backendUrl)
     axios
       .get(
-        `http://127.0.0.1:3001/api/products/${id}`
+        `${backendUrl}/api/products/${id}`
       )
       .then((response) => {
         setProduct(response.data);
@@ -26,7 +30,7 @@ const ProductDetails = () => {
     // Fetch reviews for the product
     axios
       .get(
-        `http://127.0.0.1:3001/api/reviews/${id}`
+        `${backendUrl}/api/rewiews/${id}`
       )
       .then((response) => {
         setReviews(response.data);
@@ -39,7 +43,7 @@ const ProductDetails = () => {
   const handleReviewSubmission = (review) => {
     axios
       .post(
-        `http://127.0.0.1:3001/api/reviews/${id}`,
+        `${backendUrl}/api/rewiews/${id}`,
         review
       )
       .then((response) => {
