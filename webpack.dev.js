@@ -26,9 +26,19 @@ module.exports = merge(common, {
     hot: true,
     allowedHosts: "all",
     historyApiFallback: true,
-    static: {
-      directory: path.resolve(__dirname, "dist"),
-    },
+    static: [ // <--- ¡Cambiamos a un array para servir múltiples directorios!
+      {
+        directory: path.resolve(__dirname, "dist"),
+      },
+      {
+        // Agregamos la carpeta 'public' para que el servidor también sirva su contenido
+        directory: path.resolve(__dirname, "public"),
+        // Esto hace que el contenido de 'public' sea accesible en la raíz del servidor (/)
+        publicPath: '/',
+        serveIndex: true,
+        watch: true, // Para que observe los cambios
+      },
+    ],
     client: {
       webSocketURL: publicUrl
     },

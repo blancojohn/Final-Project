@@ -1,7 +1,12 @@
 import React from 'react';
 import { Carousel as BootstrapCarousel, Container } from 'react-bootstrap';
 import "../../styles/MyCarousel.css";
-// Este componente es el carrusel con las imagenes stock
+
+import img1 from "../../../../public/carrusel1.svg";
+import img2 from "../../../../public/carrusel2.svg";
+import img3 from "../../../../public/carrusel3.svg";
+
+
 export const MyCarousel = () => {
   return (
     <Container className='mt-3'>
@@ -9,21 +14,21 @@ export const MyCarousel = () => {
         <BootstrapCarousel.Item>
           <img
             className="d-block w-100 carousel-img"
-            src="http://localhost:3001/carrusel1.svg"
+            src={img1}
             alt="First slide"
           />
         </BootstrapCarousel.Item>
         <BootstrapCarousel.Item>
           <img
             className="d-block w-100 carousel-img"
-            src="http://localhost:3001/carrusel2.svg"
+            src={img2}
             alt="Second slide"
           />
         </BootstrapCarousel.Item>
         <BootstrapCarousel.Item>
           <img
             className="d-block w-100 carousel-img"
-            src="http://localhost:3001/carrusel3.svg"
+            src={img3}
             alt="Third slide"
           />
         </BootstrapCarousel.Item>
