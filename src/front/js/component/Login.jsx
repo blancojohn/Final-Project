@@ -1,9 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { store, actions } = useContext(Context)
+
+  const handleRedirect = async () => {
+    const token = store.access_token;
+    const navigate = await useNavigate();
+    if (token !== null) {
+      navigate("/")
+    };
+  };
+  handleRedirect()
 
   return (
     <>

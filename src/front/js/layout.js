@@ -5,8 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import injectContext, { Context } from "./store/appContext";
 
 import { ChewyNavbar } from "./component/navbar";
+import Authentication from "./pages/Authentication.js";
 import { Home } from "./pages/home";
-import { RegisterLogin } from "./pages/registerLogin.js";
 import { Footer } from "./component/footer.js";
 import ScrollToTop from "./component/scrollToTop.js";
 
@@ -43,7 +43,7 @@ const Layout = () => {
                             <Route element={<Demo />} path="/demo" />
                             <Route element={<Single />} path="/single/:theid" />
                             <Route element={<ProductDetails />} path="/product/:id" />
-                            <Route element={<RegisterLogin />} path="/register" />
+                            <Route element={<Authentication />} path="/authentication" />
                             <Route element={<ForgotPassword />} path="/forgotpassword" />
                             <Route element={<Cart />} path="/cart" />
                             <Route element={<Me />} path="/me" />

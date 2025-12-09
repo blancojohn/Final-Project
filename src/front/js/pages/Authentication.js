@@ -5,9 +5,11 @@ import Register from "../component/Register.jsx";
 import Login from "../component/Login.jsx";
 import "../../styles/registerLogin.css";
 
-export const RegisterLogin = () => {
-    // el estado que guarda cual de los 2 formularios se muestran
-    const [isRegister, setIsRegister] = useState(true);
+export const Authentication = () => {
+    /*   Este componente actúa como un gestor para el proceso de autenticación.
+         Desencadena el renderizado de la animación de cual formulario mostrar para el proceso.
+         En true  muestra el  formulario de registro y en false el de iniciar sesión. */
+    const [registration, setRegistration] = useState(true);
 
     return (
         <Container
@@ -15,44 +17,43 @@ export const RegisterLogin = () => {
             <Row
                 className="justify-content-center">
                 <Col md={8} lg={6}>
-                    {/* estos son los botones que desencadenan la animacion y el cambio de formulario */}
+                    {/* Botones que desencadenan la animacion y el cambio de formulario */}
                     <div
                         className="text-center mb-4">
                         <Button
                             variant="primary"
                             className="me-2"
-                            onClick={() => setIsRegister(true)}>
+                            onClick={() => setRegistration(true)}>
                             Regístrate
                         </Button>
 
                         <Button
-                            variant="secondary"
-                            onClick={() => setIsRegister(false)}>
+                            variant="primary"
+                            className="me-2"
+                            onClick={() => setRegistration(false)}>
                             Inicia Sesión
                         </Button>
                     </div>
 
-                    {/* SwitchTransition y CSSTransition de react-transition-group se usan aqui porfa acordarse de usar NPM install para que todas las dependencias funcionen */}
                     <SwitchTransition mode="out-in">
                         <CSSTransition
-                            key={isRegister ? "register" : "login"} // la key cambia dependiendo del click a que boton
+                            key={registration ? "register" : "login"}
                             addEndListener={(node, done) => node.addEventListener("transitionend", done, false)} // termina la animacion
                             classNames="fade" // esta es el classname para la animacion q puse en registerlogin.css
                         >
                             <Card>
                                 <Card.Body>
-                                    {isRegister ? (
-                                        // aquii se muestra el formulario de registro o login según el estado isRegister usando ternario
+                                    {registration ? (
                                         <>
                                             <div className="text-center mb-3">
-                                                <h3>¡Por favor, regístrate aquí!</h3>
+                                                <h4>Regístrate aquí. Si ya tienes cuenta, haz click en el botón de inicia sesión en la parte de arriba arriba</h4>
                                             </div>
-                                            <Register />
+                                            <Register setResgistration={setRegistration} />
                                         </>
                                     ) : (
                                         <>
                                             <div className="text-center mb-3">
-                                                <h3>¡Por favor, inicia sesión!</h3>
+                                                <h4>Inicia sesión aquí. Si no tienes una cuenta, haz click en el botón de iniciar sesión en la parte de arriba</h4>
                                             </div>
                                             <Login />
                                         </>
@@ -67,4 +68,4 @@ export const RegisterLogin = () => {
     );
 };
 
-export default RegisterLogin;
+export default Authentication;

@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				name: '',
 				email: '',
 				password: '',
-				is_active: true,
+				is_active: false,
 			},
 			loginUser: {
 				email: '',
@@ -68,11 +68,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				setStore({ demo: demo });
 			},
+
+			handleSetIs_active: () => {
+				setStore({
+					registerUser: {
+						is_active: false
+					}
+				});
+			},
+
 			handleSubmitRegister: (e) => {
 				e.preventDefault()
 				const { registerUser, apiURL } = getStore()
 
-				const { getFetch } = getActions()
+				const { getFetch, handleSetIs_active } = getActions()
 				const url = `${apiURL}/api/register`
 				const raw = JSON.stringify(
 					registerUser
@@ -102,6 +111,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(datos)
 				}).catch(error => console.log(error))
 			},
+
 			handleChangeRegister: (e) => {
 				const { registerUser } = getStore()
 				const { name, value } = e.target

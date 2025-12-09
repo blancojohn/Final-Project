@@ -1,16 +1,22 @@
-import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Button, Badge } from 'react-bootstrap';
 import { Context } from '../store/appContext';
 import "../../styles/navbar.css";
 
 export const ChewyNavbar = () => {
   const { store, actions } = useContext(Context);
-
+  let navigate = useNavigate();
   const cartItemCount = store.cartItems?.length || 0; // cuántos items hay en el carrito
 
   const getNavLinkClass = ({ isActive }) =>
     `nav-link ${isActive ? 'active' : ''}`;
+
+  //Función para redireccionar al usuario desde cualquier vista o componente luego de hacer logOut
+  const handleRedirectAfterLogOut = () => {
+    actions.logOut();
+    navigate('/', { replace: true });
+  };
 
   return (
     <Navbar
@@ -88,7 +94,7 @@ export const ChewyNavbar = () => {
                   </Navbar.Text>
 
                   <Button
-                    onClick={actions.logOut}
+                    onClick={handleRedirectAfterLogOut}
                     className='ms-5'
                     variant="outline-light" >
                     Cerrar Sesión
@@ -98,9 +104,9 @@ export const ChewyNavbar = () => {
               ) : (
                 <Nav.Link
                   as={NavLink}
-                  to="/register"
+                  to="/authentication"
                   className={getNavLinkClass}>
-                  Regístrate / Login
+                  Autenticación de Usuario
                 </Nav.Link>
               )}
           </Nav>
