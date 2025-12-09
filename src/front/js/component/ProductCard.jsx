@@ -4,7 +4,7 @@ import "../../styles/productcards.css";
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
-export const ProductCards = () => {
+const ProductCard = () => {
 
   const [showModal, setShowModal] = useState(false);
   const { actions } = useContext(Context);
@@ -133,3 +133,5 @@ export const ProductCards = () => {
     </div>
   );
 };
+
+export default ProductCard;

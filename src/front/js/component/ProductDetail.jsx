@@ -4,7 +4,7 @@ import axios from "axios";
 import ReviewForm from "../component/ReviewForm.jsx";
 import { Context } from '../store/appContext';
 
-const ProductDetails = () => {
+const ProductDetail = () => {
   const { actions } = useContext(Context);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -151,4 +151,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default ProductDetail;

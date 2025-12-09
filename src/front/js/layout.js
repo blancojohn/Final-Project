@@ -4,10 +4,10 @@ import { BackendURL } from "./component/backendURL";
 import { ToastContainer } from 'react-toastify';
 import injectContext, { Context } from "./store/appContext";
 
-import { ChewyNavbar } from "./component/navbar";
-import Authentication from "./pages/Authentication.js";
-import { Home } from "./pages/home";
-import { Footer } from "./component/footer.js";
+import ChewyNavbar from "./component/Navbar.jsx";
+import Authentication from "./pages/authentication.js";
+import Home from "./pages/home";
+import Footer from "./component/Footer.jsx";
 import ScrollToTop from "./component/scrollToTop.js";
 
 // INSTANCIAS QUE NO SON PRIORIDAD DE CARGA INICIAL AL INGRESAR A LA APLICACIÓN
@@ -15,14 +15,13 @@ const Categoriap = lazy(() => import("./component/Categoriap.jsx"));
 const Categoriag = lazy(() => import("./component/Categoriag.jsx"));
 const Offer = lazy(() => import("./component/Offer.jsx"));
 const Single = lazy(() => import("./pages/single"));
-const ProductDetails = lazy(() => import("./component/ProductDetails.jsx"));
+const ProductDetail = lazy(() => import("./component/ProductDetail.jsx"));
 const ForgotPassword = lazy(() => import("./component/ForgotPassword.jsx"));
 const Cart = lazy(() => import("./component/Cart.jsx"));
 const Me = lazy(() => import("./component/Me.jsx"));
 const Demo = lazy(() => import("./pages/demo"));
 
 
-//create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
@@ -42,7 +41,7 @@ const Layout = () => {
                             <Route element={<Offer />} path="/Ofertas" />
                             <Route element={<Demo />} path="/demo" />
                             <Route element={<Single />} path="/single/:theid" />
-                            <Route element={<ProductDetails />} path="/product/:id" />
+                            <Route element={<ProductDetail />} path="/product/:id" />
                             <Route element={<Authentication />} path="/authentication" />
                             <Route element={<ForgotPassword />} path="/forgotpassword" />
                             <Route element={<Cart />} path="/cart" />

@@ -7,7 +7,7 @@ import img2 from "../../../../public/carrusel2.svg";
 import img3 from "../../../../public/carrusel3.svg";
 
 
-export const MyCarousel = () => {
+const Carousel = () => {
   return (
     <Container className='mt-3'>
       <BootstrapCarousel prevIcon={<span className="carousel-control-prev-icon" />} nextIcon={<span className="carousel-control-next-icon" />}>
@@ -36,3 +36,5 @@ export const MyCarousel = () => {
     </Container>
   );
 };
+
+export default Carousel;

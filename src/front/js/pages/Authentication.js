@@ -5,7 +5,7 @@ import Register from "../component/Register.jsx";
 import Login from "../component/Login.jsx";
 import "../../styles/registerLogin.css";
 
-export const Authentication = () => {
+const Authentication = () => {
     /*   Este componente actúa como un gestor para el proceso de autenticación.
          Desencadena el renderizado de la animación de cual formulario mostrar para el proceso.
          En true  muestra el  formulario de registro y en false el de iniciar sesión. */

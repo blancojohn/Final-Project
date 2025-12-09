@@ -2,23 +2,25 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { MyCarousel } from '../component/Carousel';
-import { ProductCards } from "../component/ProductCards.jsx";
+import Carousel from '../component/Carousel.jsx';
+import ProductCard from "../component/ProductCard.jsx";
 import Barrainfo from "../component/BarraInfo.jsx";
 
 
 
-export const Home = () => {
+const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
 		<>
 
-			<MyCarousel />
+			<Carousel />
 			<Barrainfo />
-			<ProductCards />
+			<ProductCard />
 
 		</>
 	)
 
 };
+
+export default Home;

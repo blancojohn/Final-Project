@@ -4,7 +4,7 @@ import { Navbar, Nav, Container, Button, Badge } from 'react-bootstrap';
 import { Context } from '../store/appContext';
 import "../../styles/navbar.css";
 
-export const ChewyNavbar = () => {
+const ChewyNavbar = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
   const cartItemCount = store.cartItems?.length || 0; // cuántos items hay en el carrito
@@ -115,3 +115,5 @@ export const ChewyNavbar = () => {
     </Navbar>
   );
 };
+
+export default ChewyNavbar;
