@@ -10,6 +10,7 @@ const Authentication = () => {
          Desencadena el renderizado de la animación de cual formulario mostrar para el proceso.
          En true  muestra el  formulario de registro y en false el de iniciar sesión. */
     const [registration, setRegistration] = useState(true);
+    /* Solucionando */
 
     return (
         <Container
