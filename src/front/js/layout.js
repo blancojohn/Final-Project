@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import injectContext, { Context } from "./store/appContext";
 
 import ChewyNavbar from "./component/Navbar.jsx";
-import Authentication from "./pages/authentication.js";
+import Authentication from "./pages/authentication";
 import Home from "./pages/home";
 import Footer from "./component/Footer.jsx";
 import ScrollToTop from "./component/scrollToTop.js";
