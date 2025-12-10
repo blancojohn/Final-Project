@@ -5,8 +5,6 @@ import { toast } from 'react-toastify';
 const backendUrl = process.env.BACKEND_URL
 
 const getState = ({ getStore, getActions, setStore }) => {
-
-	console.log(backendUrl)
 	return {
 		store: {
 			message: null,
@@ -226,16 +224,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						"Authorization": `Bearer ${access_token}`
 					}
 				}
-				console.log("Solicitud", solicitud)
 				fetch(url, solicitud)
 					.then(response => {
 						return response.json()
 					})
 					.then(datos => {
-						console.log(datos)
 						if (datos.msg) toast.error(datos.msg)
 						else {
-							console.log(datos)
 							setStore({
 								user: datos
 							})

@@ -41,21 +41,21 @@ const ChewyNavbar = () => {
             className="me-auto">
             <Nav.Link
               as={NavLink}
-              to="/Perros"
+              to="/products-dogs"
               className={getNavLinkClass}>
               Perros
             </Nav.Link>
 
             <Nav.Link
               as={NavLink}
-              to="/Gatos"
+              to="/products-cats"
               className={getNavLinkClass}>
               Gatos
             </Nav.Link>
 
             <Nav.Link
               as={NavLink}
-              to="/Ofertas"
+              to="/Offers"
               className={getNavLinkClass}>
               Ofertas
             </Nav.Link>

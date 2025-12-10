@@ -11,8 +11,8 @@ import Footer from "./component/Footer.jsx";
 import ScrollToTop from "./component/scrollToTop.js";
 
 // INSTANCIAS QUE NO SON PRIORIDAD DE CARGA INICIAL AL INGRESAR A LA APLICACIÓN
-const Categoriap = lazy(() => import("./component/Categoriap.jsx"));
-const Categoriag = lazy(() => import("./component/Categoriag.jsx"));
+const CategoryDog = lazy(() => import("./pages/productDog"));
+const CategoryCat = lazy(() => import("./pages/productCat"));
 const Offer = lazy(() => import("./component/Offer.jsx"));
 const Single = lazy(() => import("./pages/single"));
 const ProductDetail = lazy(() => import("./component/ProductDetail.jsx"));
@@ -36,9 +36,9 @@ const Layout = () => {
                     <Suspense fallback={<div>Cargando contenido...</div>}>
                         <Routes>
                             <Route element={<Home />} path="/" />
-                            <Route element={<Categoriap />} path="/Perros" />
-                            <Route element={<Categoriag />} path="/Gatos" />
-                            <Route element={<Offer />} path="/Ofertas" />
+                            <Route element={<CategoryDog />} path="/products-dogs" />
+                            <Route element={<CategoryCat />} path="/products-cats" />
+                            <Route element={<Offer />} path="/Offers" />
                             <Route element={<Demo />} path="/demo" />
                             <Route element={<Single />} path="/single/:theid" />
                             <Route element={<ProductDetail />} path="/product/:id" />
