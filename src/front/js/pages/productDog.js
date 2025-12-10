@@ -57,6 +57,7 @@ const CategoryDog = () => {
                             price={price}
                             discount={discount}
                             category={category}
+                            actions={actions}
                         />
                     ))
                 }

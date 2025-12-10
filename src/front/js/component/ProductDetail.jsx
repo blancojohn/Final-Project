@@ -28,7 +28,7 @@ const ProductDetail = () => {
     // Fetch reviews for the product
     axios
       .get(
-        `${backendUrl}/api/rewiews/${id}`
+        `${backendUrl}/api/reviews/${id}`
       )
       .then((response) => {
         setReviews(response.data);
@@ -41,7 +41,7 @@ const ProductDetail = () => {
   const handleReviewSubmission = (review) => {
     axios
       .post(
-        `${backendUrl}/api/rewiews/${id}`,
+        `${backendUrl}/api/reviews/${id}`,
         review
       )
       .then((response) => {

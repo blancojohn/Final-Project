@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from '../store/appContext';
 import axios from 'axios';
 import ProductCard from "./ProductCard.jsx";
 
 const Offer = () => {
+    const { actions } = useContext(Context);
     const [products, setProducts] = useState([]);
 
     const backendUrl = process.env.BACKEND_URL;
@@ -36,6 +38,7 @@ const Offer = () => {
                             price={price}
                             discount={discount}
                             category={category}
+                            actions={actions}
                         />
                     ))
                 }
