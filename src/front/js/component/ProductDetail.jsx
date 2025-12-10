@@ -14,8 +14,6 @@ const ProductDetail = () => {
 
   useEffect(() => {
     // Fetch product details
-
-    console.log(backendUrl)
     axios
       .get(
         `${backendUrl}/api/products/${id}`
