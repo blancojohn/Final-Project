@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Button, Container } from "react-bootstrap";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import Register from "../component/Register.jsx";
-import Login from "../component/Login.jsx";
+import Register from "./Register.jsx";
+import Login from "./Login.jsx";
 import "../../styles/registerLogin.css";
 
 const Authentication = () => {
