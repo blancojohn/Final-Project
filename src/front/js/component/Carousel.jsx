@@ -2,9 +2,9 @@ import React from 'react';
 import { Carousel as BootstrapCarousel, Container } from 'react-bootstrap';
 import "../../styles/MyCarousel.css";
 
-import img1 from "../../../../public/carrusel1.svg";
-import img2 from "../../../../public/carrusel2.svg";
-import img3 from "../../../../public/carrusel3.svg";
+import img1 from "../../../../public/imgCarrusel1.png";
+import img2 from "../../../../public/imgCarrusel2.png";
+import img3 from "../../../../public/imgCarrusel3.png";
 
 
 const Carousel = () => {

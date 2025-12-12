@@ -40,7 +40,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      favicon: 'public/logo.svg',
+      favicon: 'public/logo.png',
       template: 'template.html'
     }),
     new Dotenv({ safe: true, systemvars: true })
